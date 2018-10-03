@@ -7,18 +7,19 @@ const Content = (props) => {
   return <h3>{props.page} renders here</h3>
 }
 
+const clickThrough = {
+    pointerEvents: 'none'
+}
+
 class App extends Component {
   state = {
-    page: "main"
+    page: "map"
   }
 
   navBtnClicked = (e) => {
-    console.log(e)
-    if (!this.state.page === e) {
       this.setState({
-        page: e
+        page: e.target.dataset.page
       })
-    }
   }
 
   render() {
@@ -32,9 +33,9 @@ class App extends Component {
         <section name="nav-bar" className="d-block">
           <div className="container-fluid fixed-bottom bg-secondary">
             <div className="row">
-              <div onClick={this.navBtnClicked('main')} className="btn btn-lg col py-2 border-y rounded-0 text-center text-info"><i className="fas fa-lg fa-map-marked"></i></div>
-              <div onClick={this.navBtnClicked('map')} className="btn btn-lg col py-2 border-y rounded-0 text-center text-white"><i className="fas fa-lg fa-users"></i></div>
-              <div onClick={this.navBtnClicked('search')} className="btn btn-lg col py-2 border-y rounded-0 text-center text-white"><i className="fas fa-lg fa-search"></i></div>
+              <div onClick={this.navBtnClicked} data-page="map" className="btn btn-lg col py-2 border-y rounded-0 text-center text-info"><i style={clickThrough} className="fas fa-lg fa-map-marked"></i></div>
+              <div onClick={this.navBtnClicked} data-page="user" className="btn btn-lg col py-2 border-y rounded-0 text-center text-white"><i style={clickThrough} className="fas fa-lg fa-users"></i></div>
+              <div onClick={this.navBtnClicked} data-page="search" className="btn btn-lg col py-2 border-y rounded-0 text-center text-white"><i style={clickThrough} className="fas fa-lg fa-search"></i></div>
             </div>
           </div>
         </section>
