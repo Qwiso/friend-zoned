@@ -23,6 +23,7 @@
     "not op_mini all"
   ],
   "devDependencies": {
+    "@fortawesome/fontawesome-free": "^5.3.1",
     "bootstrap": "^4.1.3"
   }
 }
