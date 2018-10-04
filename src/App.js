@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Route, Link } from 'react-router-dom'
+import { Route, NavLink } from 'react-router-dom'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import '@fortawesome/fontawesome-free/css/all.min.css'
 
@@ -19,11 +19,11 @@ class App extends Component {
         </div>
         </section>
         <section name="nav-bar" className="d-block">
-          <div className="container-fluid fixed-bottom bg-secondary">
-            <div className="row d-flex justify-content-around">
-              <Link to="/map"><i className="fas fa-lg fa-map-marked text-white p-3"></i></Link>
-              <Link to="/user"><i className="fas fa-lg fa-users text-white p-3"></i></Link>
-              <Link to="/explore"><i className="fas fa-lg fa-search text-white p-3"></i></Link>
+          <div className="container-fluid fixed-bottom bg-dark">
+            <div className="row d-flex justify-content-around text-center">
+              <NavLink to="/map" activeClassName="bg-info" className="col"><i className="fas fa-lg fa-map-marked p-3 text-white"></i></NavLink>
+              <NavLink to="/user" activeClassName="bg-info" className="col"><i className="fas fa-lg fa-users p-3 text-white"></i></NavLink>
+              <NavLink to="/explore" activeClassName="bg-info" className="col"><i className="fas fa-lg fa-search p-3 text-white"></i></NavLink>
             </div>
           </div>
         </section>
