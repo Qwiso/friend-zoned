@@ -323,11 +323,9 @@ function MOverlay(guid, type, latlngs) {
     save.onclick = saveUserOverlays;
     load.dataset.customAction = "load";
     load.onclick = loadUserOverlays;
-    $(save).append("<i class='fas fa-lg fa-save'></i>");
-    $(load).append("<i class='fas fa-lg fa-folder'></i>");
-    $(btnholder)
-      .append(save)
-      .append(load);
+    save.innerHTML = "<i class='fas fa-lg fa-save'></i>";
+    load.innerHTML = "<i class='fas fa-lg fa-folder'></i>";
+    btnholder.innerHTML = save + load;
     map.controls[google.maps.ControlPosition.TOP_CENTER].push(btnholder);
   }
   
