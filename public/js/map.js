@@ -1,4 +1,4 @@
-export class map {
+export class meh {
   constructor() {
     var map;
     var drawingManager;

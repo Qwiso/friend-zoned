@@ -1,1 +1,3 @@
-import map from './map'
+import GoogleMap from './GoogleMap'
+
+new GoogleMap()
