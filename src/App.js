@@ -7,10 +7,6 @@ import { GoogleMap } from "./components/GoogleMap"
 import { Profile } from "./components/Profile"
 import { Explore } from "./components/Explore"
 
-const style = {
-  height: "46px"
-}
-
 class App extends Component {
   render() {
     return (
@@ -23,7 +19,7 @@ class App extends Component {
         </div>
         </section>
         <section name="navbar" className="d-block">
-          <div className="container-fluid fixed-bottom bg-dark" style={style}>
+          <div className="container-fluid fixed-bottom bg-dark" style={{height: "46px"}}>
             <div className="row d-flex justify-content-around text-center">
               <NavLink to="/map" activeClassName="bg-info" className="col"><i className="fas fa-lg fa-map-marked p-3 text-white"></i></NavLink>
               <NavLink to="/user" activeClassName="bg-info" className="col"><i className="fas fa-lg fa-users p-3 text-white"></i></NavLink>
