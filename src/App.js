@@ -7,6 +7,10 @@ import { GoogleMap } from "./components/GoogleMap"
 import { Profile } from "./components/Profile"
 import { Explore } from "./components/Explore"
 
+const style = {
+  height: "46px"
+}
+
 class App extends Component {
   render() {
     return (
@@ -18,8 +22,8 @@ class App extends Component {
           <Route path="/explore" component={Explore} />
         </div>
         </section>
-        <section name="nav-bar" className="d-block">
-          <div className="container-fluid fixed-bottom bg-dark">
+        <section name="navbar" className="d-block">
+          <div className="container-fluid fixed-bottom bg-dark" style={style}>
             <div className="row d-flex justify-content-around text-center">
               <NavLink to="/map" activeClassName="bg-info" className="col"><i className="fas fa-lg fa-map-marked p-3 text-white"></i></NavLink>
               <NavLink to="/user" activeClassName="bg-info" className="col"><i className="fas fa-lg fa-users p-3 text-white"></i></NavLink>
