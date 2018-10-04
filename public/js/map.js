@@ -1,31 +1,35 @@
-function MOverlay(guid, type, latlngs) {
+export class map {
+  constructor() {
+    var map;
+    var drawingManager;
+    var userOverlaysArray = {};
+    var infoWindow;
+    var toolWindow;
+    var currentMapOverlay;
+    var currentUserOverlay;
+    var lat = 33.825858;
+    var lng = -84.362226;
+    var mapInitialized = false;
+    
+    var demoJson =
+      '[{"type":"marker","latLngs":{"lat":33.83008972168741,"lng":-84.35267661111448},"iwTitle":""},{"type":"rectangle","latLngs":{"south":33.834937908324825,"west":-84.35417864816282,"north":33.8380748237402,"east":-84.34851382272336},"iwTitle":"123","iwText":"(33.83600732424177, -84.35271952645871)","iwDate":"1970-01-05"},{"type":"polygon","latLngs":{"b":[{"lat":33.8246351830603,"lng":-84.35658190744016},{"lat":33.825811681608904,"lng":-84.353492002655},{"lat":33.82620384419449,"lng":-84.35211871163938},{"lat":33.82588298403098,"lng":-84.35018752114865},{"lat":33.83361894359985,"lng":-84.3410465528259},{"lat":33.83301292595647,"lng":-84.34001658456418},{"lat":33.82538386582782,"lng":-84.3489000608215},{"lat":33.825134305633675,"lng":-84.35065958993528},{"lat":33.825312562989545,"lng":-84.35233328836057},{"lat":33.82399344975633,"lng":-84.35563776986692}],"gm_accessors_":{"length":null},"length":10,"gm_bindings_":{"length":{}}},"iwTitle":"highway","iwText":"(33.83155133631693, -84.34280608193967)"}]';
+  }
+
+  Zone(guid, type, latlngs) {
     this.guid = guid;
     this.type = type;
     this.latLngs = latlngs;
-    this.iwTitle = "";
-    this.iwText = "";
-    this.iwDate = "";
+    this.Title = "";
+    this.Text = "";
+    this.Date = "";
   }
+    
   
-  var map;
-  var drawingManager;
-  var userOverlaysArray = {};
-  var infoWindow;
-  var toolWindow;
-  var currentMapOverlay;
-  var currentUserOverlay;
-  var lat = 33.825858;
-  var lng = -84.362226;
-  var mapInitialized = false;
+  // initMap();
+  // setupCustomButtons();
+  // renderUserOverlays(demoJson);
   
-  var demoJson =
-    '[{"type":"marker","latLngs":{"lat":33.83008972168741,"lng":-84.35267661111448},"iwTitle":""},{"type":"rectangle","latLngs":{"south":33.834937908324825,"west":-84.35417864816282,"north":33.8380748237402,"east":-84.34851382272336},"iwTitle":"123","iwText":"(33.83600732424177, -84.35271952645871)","iwDate":"1970-01-05"},{"type":"polygon","latLngs":{"b":[{"lat":33.8246351830603,"lng":-84.35658190744016},{"lat":33.825811681608904,"lng":-84.353492002655},{"lat":33.82620384419449,"lng":-84.35211871163938},{"lat":33.82588298403098,"lng":-84.35018752114865},{"lat":33.83361894359985,"lng":-84.3410465528259},{"lat":33.83301292595647,"lng":-84.34001658456418},{"lat":33.82538386582782,"lng":-84.3489000608215},{"lat":33.825134305633675,"lng":-84.35065958993528},{"lat":33.825312562989545,"lng":-84.35233328836057},{"lat":33.82399344975633,"lng":-84.35563776986692}],"gm_accessors_":{"length":null},"length":10,"gm_bindings_":{"length":{}}},"iwTitle":"highway","iwText":"(33.83155133631693, -84.34280608193967)"}]';
-  
-  initMap();
-  setupCustomButtons();
-  renderUserOverlays(demoJson);
-  
-  function initMap() {
+  initMap() {
     var nightStyle = [
       { elementType: "geometry", stylers: [{ color: "#242f3e" }] },
       { elementType: "labels.text.stroke", stylers: [{ color: "#242f3e" }] },
@@ -127,7 +131,7 @@ function MOverlay(guid, type, latlngs) {
         center: { lat: lat, lng: lng },
         clickableIcons: false,
         styles: nightStyle,
-
+  
         zoomControl: true,
         mapTypeControl: false,
         scaleControl: false,
@@ -146,11 +150,11 @@ function MOverlay(guid, type, latlngs) {
       toolWindow = new google.maps.InfoWindow();
       google.maps.event.clearListeners(map, "tilesloaded"); //unhooks itself after firing once
     });
-
+  
     initDrawing();
   }
   
-  function initDrawing() {
+  initDrawing() {
     drawingManager = new google.maps.drawing.DrawingManager();
     drawingManager.setOptions({
       drawingMode: null,
@@ -165,7 +169,7 @@ function MOverlay(guid, type, latlngs) {
     drawingManager.addListener("overlaycomplete", overlayDrawn);
   }
   
-  function overlayDrawn(event) {
+  overlayDrawn(event) {
     event.overlay.addListener("click", overlayClicked);
     event.overlay.addListener("rightclick", overlayRightClicked);
     drawingManager.setOptions({ drawingMode: null });
@@ -188,7 +192,7 @@ function MOverlay(guid, type, latlngs) {
     userOverlaysArray[guid] = new MOverlay(guid, event.type, latLngs);
   }
   
-  function overlayRightClicked(event) {
+  overlayRightClicked(event) {
     if (toolWindow) toolWindow.close();
     infoWindowClosing();
   
@@ -197,7 +201,7 @@ function MOverlay(guid, type, latlngs) {
     toolWindow.open(map);
   }
   
-  function overlayClicked(event) {
+  overlayClicked(event) {
     if (toolWindow) toolWindow.close();
     infoWindowClosing();
   
@@ -209,7 +213,7 @@ function MOverlay(guid, type, latlngs) {
     renderInfoWindow(event, userOverlay, this);
   }
   
-  function renderInfoWindow(event, userOverlay) {
+  renderInfoWindow(event, userOverlay) {
     $("#infoWindowTitle").attr("value", userOverlay.iwTitle || userOverlay.type);
     $("#infoWindowText").html(userOverlay.iwText || event.latLng.toString());
     $("#infoWindowDate").attr("value", userOverlay.iwDate || "1970-01-05");
@@ -219,7 +223,7 @@ function MOverlay(guid, type, latlngs) {
     infoWindow.open(map);
   }
   
-  function infoWindowClosing() {
+  infoWindowClosing() {
     if (!currentUserOverlay || !currentMapOverlay) return;
     currentUserOverlay.iwTitle = $("#infoWindowTitle").val();
     currentUserOverlay.iwText = $("#infoWindowText").val();
@@ -230,7 +234,7 @@ function MOverlay(guid, type, latlngs) {
     infoWindow.close();
   }
   
-  function saveUserOverlays() {
+  saveUserOverlays() {
     var cache = [];
     var temp = [];
   
@@ -257,7 +261,7 @@ function MOverlay(guid, type, latlngs) {
     return json;
   }
   
-  function loadUserOverlays() {
+  loadUserOverlays() {
     var string = prompt("paste json");
     if (string != null && string != "undefined") {
       userOverlays.setHash(new Object());
@@ -265,7 +269,7 @@ function MOverlay(guid, type, latlngs) {
     }
   }
   
-  function renderUserOverlays(json) {
+  renderUserOverlays(json) {
     var savedOverlays = JSON.parse(json); // HashTable of userOverlays
   
     userOverlaysArray = {};
@@ -285,7 +289,7 @@ function MOverlay(guid, type, latlngs) {
     }
   }
   
-  function renderOverlayItem(e) {
+  renderOverlayItem(e) {
     switch (e.type) {
       case "marker":
         return new google.maps.Marker({
@@ -314,7 +318,7 @@ function MOverlay(guid, type, latlngs) {
     }
   }
   
-  function setupCustomButtons() {
+  setupCustomButtons() {
     var btnholder = document.createElement("div");
     btnholder.classList.add("custombuttonholder");
     var save = new CustomControl();
@@ -329,13 +333,13 @@ function MOverlay(guid, type, latlngs) {
     map.controls[google.maps.ControlPosition.TOP_CENTER].push(btnholder);
   }
   
-  function CustomControl() {
+  CustomControl() {
     var controlUI = document.createElement("div");
     controlUI.classList.add("custombutton");
     return controlUI;
   }
   
-  function getUID() {
+  getUID() {
     return ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, c =>
       (
         c ^
@@ -343,3 +347,4 @@ function MOverlay(guid, type, latlngs) {
       ).toString(16)
     );
   }
+}
