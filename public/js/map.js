@@ -1,21 +1,18 @@
-export class meh {
-  constructor() {
-    var map;
-    var drawingManager;
-    var userOverlaysArray = {};
-    var infoWindow;
-    var toolWindow;
-    var currentMapOverlay;
-    var currentUserOverlay;
-    var lat = 33.825858;
-    var lng = -84.362226;
-    var mapInitialized = false;
-    
-    var demoJson =
-      '[{"type":"marker","latLngs":{"lat":33.83008972168741,"lng":-84.35267661111448},"iwTitle":""},{"type":"rectangle","latLngs":{"south":33.834937908324825,"west":-84.35417864816282,"north":33.8380748237402,"east":-84.34851382272336},"iwTitle":"123","iwText":"(33.83600732424177, -84.35271952645871)","iwDate":"1970-01-05"},{"type":"polygon","latLngs":{"b":[{"lat":33.8246351830603,"lng":-84.35658190744016},{"lat":33.825811681608904,"lng":-84.353492002655},{"lat":33.82620384419449,"lng":-84.35211871163938},{"lat":33.82588298403098,"lng":-84.35018752114865},{"lat":33.83361894359985,"lng":-84.3410465528259},{"lat":33.83301292595647,"lng":-84.34001658456418},{"lat":33.82538386582782,"lng":-84.3489000608215},{"lat":33.825134305633675,"lng":-84.35065958993528},{"lat":33.825312562989545,"lng":-84.35233328836057},{"lat":33.82399344975633,"lng":-84.35563776986692}],"gm_accessors_":{"length":null},"length":10,"gm_bindings_":{"length":{}}},"iwTitle":"highway","iwText":"(33.83155133631693, -84.34280608193967)"}]';
-  }
+  var map;
+  var drawingManager;
+  var userOverlaysArray = {};
+  var infoWindow;
+  var toolWindow;
+  var currentMapOverlay;
+  var currentUserOverlay;
+  var lat = 33.825858;
+  var lng = -84.362226;
+  var mapInitialized = false;
+  
+  var demoJson =
+    '[{"type":"marker","latLngs":{"lat":33.83008972168741,"lng":-84.35267661111448},"iwTitle":""},{"type":"rectangle","latLngs":{"south":33.834937908324825,"west":-84.35417864816282,"north":33.8380748237402,"east":-84.34851382272336},"iwTitle":"123","iwText":"(33.83600732424177, -84.35271952645871)","iwDate":"1970-01-05"},{"type":"polygon","latLngs":{"b":[{"lat":33.8246351830603,"lng":-84.35658190744016},{"lat":33.825811681608904,"lng":-84.353492002655},{"lat":33.82620384419449,"lng":-84.35211871163938},{"lat":33.82588298403098,"lng":-84.35018752114865},{"lat":33.83361894359985,"lng":-84.3410465528259},{"lat":33.83301292595647,"lng":-84.34001658456418},{"lat":33.82538386582782,"lng":-84.3489000608215},{"lat":33.825134305633675,"lng":-84.35065958993528},{"lat":33.825312562989545,"lng":-84.35233328836057},{"lat":33.82399344975633,"lng":-84.35563776986692}],"gm_accessors_":{"length":null},"length":10,"gm_bindings_":{"length":{}}},"iwTitle":"highway","iwText":"(33.83155133631693, -84.34280608193967)"}]';
 
-  Zone(guid, type, latlngs) {
+  function Zone(guid, type, latlngs) {
     this.guid = guid;
     this.type = type;
     this.latLngs = latlngs;
@@ -25,11 +22,11 @@ export class meh {
   }
     
   
-  // initMap();
-  // setupCustomButtons();
-  // renderUserOverlays(demoJson);
+  initMap();
+  setupCustomButtons();
+  renderUserOverlays(demoJson);
   
-  initMap() {
+  function initMap() {
     var nightStyle = [
       { elementType: "geometry", stylers: [{ color: "#242f3e" }] },
       { elementType: "labels.text.stroke", stylers: [{ color: "#242f3e" }] },
@@ -154,7 +151,7 @@ export class meh {
     initDrawing();
   }
   
-  initDrawing() {
+  function initDrawing() {
     drawingManager = new google.maps.drawing.DrawingManager();
     drawingManager.setOptions({
       drawingMode: null,
@@ -169,7 +166,7 @@ export class meh {
     drawingManager.addListener("overlaycomplete", overlayDrawn);
   }
   
-  overlayDrawn(event) {
+  function overlayDrawn(event) {
     event.overlay.addListener("click", overlayClicked);
     event.overlay.addListener("rightclick", overlayRightClicked);
     drawingManager.setOptions({ drawingMode: null });
@@ -192,7 +189,7 @@ export class meh {
     userOverlaysArray[guid] = new MOverlay(guid, event.type, latLngs);
   }
   
-  overlayRightClicked(event) {
+  function overlayRightClicked(event) {
     if (toolWindow) toolWindow.close();
     infoWindowClosing();
   
@@ -201,7 +198,7 @@ export class meh {
     toolWindow.open(map);
   }
   
-  overlayClicked(event) {
+  function overlayClicked(event) {
     if (toolWindow) toolWindow.close();
     infoWindowClosing();
   
@@ -213,7 +210,7 @@ export class meh {
     renderInfoWindow(event, userOverlay, this);
   }
   
-  renderInfoWindow(event, userOverlay) {
+  function renderInfoWindow(event, userOverlay) {
     $("#infoWindowTitle").attr("value", userOverlay.iwTitle || userOverlay.type);
     $("#infoWindowText").html(userOverlay.iwText || event.latLng.toString());
     $("#infoWindowDate").attr("value", userOverlay.iwDate || "1970-01-05");
@@ -223,7 +220,7 @@ export class meh {
     infoWindow.open(map);
   }
   
-  infoWindowClosing() {
+  function infoWindowClosing() {
     if (!currentUserOverlay || !currentMapOverlay) return;
     currentUserOverlay.iwTitle = $("#infoWindowTitle").val();
     currentUserOverlay.iwText = $("#infoWindowText").val();
@@ -234,7 +231,7 @@ export class meh {
     infoWindow.close();
   }
   
-  saveUserOverlays() {
+  function saveUserOverlays() {
     var cache = [];
     var temp = [];
   
@@ -261,7 +258,7 @@ export class meh {
     return json;
   }
   
-  loadUserOverlays() {
+  function loadUserOverlays() {
     var string = prompt("paste json");
     if (string != null && string != "undefined") {
       userOverlays.setHash(new Object());
@@ -269,7 +266,7 @@ export class meh {
     }
   }
   
-  renderUserOverlays(json) {
+  function renderUserOverlays(json) {
     var savedOverlays = JSON.parse(json); // HashTable of userOverlays
   
     userOverlaysArray = {};
@@ -289,7 +286,7 @@ export class meh {
     }
   }
   
-  renderOverlayItem(e) {
+  function renderOverlayItem(e) {
     switch (e.type) {
       case "marker":
         return new google.maps.Marker({
@@ -318,7 +315,7 @@ export class meh {
     }
   }
   
-  setupCustomButtons() {
+  function setupCustomButtons() {
     var btnholder = document.createElement("div");
     btnholder.classList.add("custombuttonholder");
     var save = new CustomControl();
@@ -333,13 +330,13 @@ export class meh {
     map.controls[google.maps.ControlPosition.TOP_CENTER].push(btnholder);
   }
   
-  CustomControl() {
+  function CustomControl() {
     var controlUI = document.createElement("div");
     controlUI.classList.add("custombutton");
     return controlUI;
   }
   
-  getUID() {
+  function getUID() {
     return ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, c =>
       (
         c ^
