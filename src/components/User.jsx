@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
 
-export class Profile extends Component {
+export class User extends Component {
     state = {  }
     render() { 
         return (
-            <h1>profile</h1>
+            <h1>user</h1>
         )
     }
 }
