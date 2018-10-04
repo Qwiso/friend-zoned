@@ -17,7 +17,7 @@ export class GoogleMap extends Component {
             <div className="row">
                 <div id="map" style={{width: "100vw", height: this.state.map_height}}></div>
                 <Helmet>
-                    <script src="/js/map.js"></script>
+                    <script src="/js/bundle.js"></script>
                 </Helmet>
             </div>
         )

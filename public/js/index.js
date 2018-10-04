@@ -1,3 +1,3 @@
 import GoogleMap from './GoogleMap'
 
-new GoogleMap()
+console.log(new GoogleMap())

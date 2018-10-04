@@ -3,7 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@types/googlemaps": "^3.30.13",
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
     "react-helmet": "^5.2.0",
@@ -27,7 +26,6 @@
   ],
   "devDependencies": {
     "@fortawesome/fontawesome-free": "^5.3.1",
-    "@google/maps": "^0.5.5",
     "bootstrap": "^4.1.3"
   }
 }
