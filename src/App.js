@@ -4,7 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import '@fortawesome/fontawesome-free/css/all.min.css'
 
 import { GoogleMap } from "./components/GoogleMap"
-import { Profile } from "./components/Profile"
+import { User } from "./components/User"
 import { Explore } from "./components/Explore"
 
 class App extends Component {
@@ -14,7 +14,7 @@ class App extends Component {
         <section name="content">
         <div className="container-fluid">
           <Route path="/map" component={GoogleMap} />
-          <Route path="/user" component={Profile} />
+          <Route path="/user" component={User} />
           <Route path="/explore" component={Explore} />
         </div>
         </section>
