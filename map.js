@@ -185,7 +185,6 @@ function overlayDrawn(event) {
   }
 
   var guid = getUID();
-  //            userOverlays.put(event.overlay, new MOverlay(guid, event.type, latLngs););
   userOverlaysArray[guid] = new MOverlay(guid, event.type, latLngs);
 }
 
