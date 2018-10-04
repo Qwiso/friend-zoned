@@ -33,15 +33,15 @@ export default class GoogleMap
   }
 
   mapLoaded(e) {
-    console.log(e)
+    // console.log(e)
   }
 
   mapClicked(e) {
-    console.log(e)
+    // console.log(e)
   }
 
   overlayDrawn(e) {
-      console.log(e)
+      // console.log(e)
   }
 }
 

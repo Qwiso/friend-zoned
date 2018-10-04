@@ -1,3 +1,5 @@
 import GoogleMap from './GoogleMap'
 
-console.log(new GoogleMap())
+const foo = new GoogleMap()
+
+console.log(foo)
