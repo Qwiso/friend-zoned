@@ -1,12 +1,13 @@
 export default class GoogleMap
  {
     constructor() {
+
         this.overlays = []
         var lat = 33.825858;
         var lng = -84.362226;
         this.map = new google.maps.Map(document.getElementById("map"), {
             zoom: 14,
-            center: { lat: lat, lng: lng },
+            // center: { lat: lat, lng: lng },
             clickableIcons: false,
             styles: mapStyle,
             zoomControl: false,
@@ -24,17 +25,16 @@ export default class GoogleMap
             drawingMode: null,
             drawingControl: true,
             drawingControlOptions: {
-              position: google.maps.ControlPosition.TOP_CENTER,
-              drawingModes: ["marker", "rectangle", "polygon"]
+                position: google.maps.ControlPosition.TOP_CENTER,
+                drawingModes: ["marker", "rectangle", "polygon"]
             }
         })
       
         this.drawingManager.addListener('overlaycomplete', this.overlayDrawn);
-        this.drawingManager.setMap(this.map);
+        this.drawingManager.setMap(this.map)
     }
 
-    mapLoaded(e) {
-      // console.log(e)
+    mapLoaded() {
     }
 
     mapClicked(e) {
@@ -42,11 +42,11 @@ export default class GoogleMap
     }
 
     overlayDrawn(e) {
+        window.dispatchEvent(new CustomEvent('map_overlay_drawn', { detail: e }))
         let overlay = e.overlay
         overlay.type = e.type
         overlay.addListener('click', this.overlayClicked);
         overlay.addListener('rightclick', this.overlayRightClicked);
-        this.drawingManager.setOptions({ drawingMode: null });
 
         var latLngs
         switch (overlay.type) {
@@ -61,16 +61,24 @@ export default class GoogleMap
                 break;
         }
 
-        var guid = getUID()
-        this.overlays[guid] = {
-            guid: guid,
-            type: event.type,
-            latLngs: latLngs
-        }
+        // var guid = getUID()
+        // this.overlays[guid] = {
+        //     guid: guid,
+        //     type: event.type,
+        //     latLngs: latLngs
+        // }
     }
 
-    overlayClicked(){
-        console.log(this)
+    overlayClicked() {
+
+    }
+
+    getUID() {
+        return ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, c =>
+            (
+              c ^ (crypto.getRandomValues(new Uint8Array(1))[0] & (15 >> (c / 4)))
+            ).toString(16)
+        );
     }
 }
 
