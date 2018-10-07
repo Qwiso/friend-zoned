@@ -1,13 +1,12 @@
-export default class GoogleMap
+export class GoogleMap
  {
     constructor() {
-
         this.overlays = []
         var lat = 33.825858;
         var lng = -84.362226;
         this.map = new google.maps.Map(document.getElementById("map"), {
             zoom: 14,
-            // center: { lat: lat, lng: lng },
+            center: { lat: lat, lng: lng },
             clickableIcons: false,
             styles: mapStyle,
             zoomControl: false,
@@ -30,34 +29,40 @@ export default class GoogleMap
             }
         })
       
-        this.drawingManager.addListener('overlaycomplete', this.overlayDrawn);
+        console.log( this.drawingManager.addListener('overlaycomplete', this.overlayDrawn) )
         this.drawingManager.setMap(this.map)
     }
 
-    mapLoaded() {
+    mapLoaded(e) {
+      // create infowindows
     }
 
     mapClicked(e) {
       // console.log(e)
     }
 
-    overlayDrawn(e) {
-        window.dispatchEvent(new CustomEvent('map_overlay_drawn', { detail: e }))
-        let overlay = e.overlay
-        overlay.type = e.type
-        overlay.addListener('click', this.overlayClicked);
-        overlay.addListener('rightclick', this.overlayRightClicked);
+    overlayDrawn(event) {
+        window.dispatchEvent(new CustomEvent('map_overlay_drawn', { detail: event }))
+        
+        // event.overlay.addListener('click', this.overlayClicked)
+        event.overlay.addListener('click', (a) => {
+          console.log(a)
+        })
+        
+        // event.overlay.addListener('rightclick', this.overlayRightClicked)
+        event.overlay.addListener('rightclick', (a) => {
+          console.log(a)
+        })
 
-        var latLngs
-        switch (overlay.type) {
+        switch (event.overlay.type) {
             case "marker":
-                latLngs = overlay.position;
+                latLngs = event.overlay.position;
                 break;
             case "polygon":
-                latLngs = overlay.getPath();
+                latLngs = event.overlay.getPath();
                 break;
             case "rectangle":
-                latLngs = overlay.bounds;
+                latLngs = event.overlay.bounds;
                 break;
         }
 
@@ -69,8 +74,8 @@ export default class GoogleMap
         // }
     }
 
-    overlayClicked() {
-
+    overlayClicked(a) {
+      window.dispatchEvent(new CustomEvent('map_overlay_clicked'), {e : a})
     }
 
     getUID() {

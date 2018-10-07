@@ -21,7 +21,6 @@ function Zone(guid, type, latlngs) {
   this.Date = "";
 }
   
-
 initMap();
 setupCustomButtons();
 renderUserOverlays(demoJson);
@@ -38,8 +37,6 @@ function initMap() {
     },
     {
       featureType: "poi",
-      //                elementType: 'labels.text.fill',
-      //                stylers: [{color: '#d59563'}]
       stylers: [{ visibility: "off" }]
     },
     {
