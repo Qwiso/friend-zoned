@@ -29,7 +29,7 @@ export class MapController
             }
         })
       
-        console.log( this.drawingManager.addListener('overlaycomplete', this.overlayDrawn) )
+        this.drawingManager.addListener('overlaycomplete', this.overlayDrawn)
         this.drawingManager.setMap(this.map)
     }
 
@@ -45,33 +45,16 @@ export class MapController
         window.dispatchEvent(new CustomEvent('map_overlay_drawn', { detail: event }))
         
         // event.overlay.addListener('click', this.overlayClicked)
-        event.overlay.addListener('click', (a) => {
-          console.log(a)
+        event.overlay.addListener('click', () => {
+          window.dispatchEvent(new CustomEvent('map_overlay_click', { detail: event }))
         })
         
         // event.overlay.addListener('rightclick', this.overlayRightClicked)
-        event.overlay.addListener('rightclick', (a) => {
-          console.log(a)
+        event.overlay.addListener('rightclick', () => {
+          window.dispatchEvent(new CustomEvent('map_overlay_rightclick', { detail: event }))
         })
 
-        // switch (event.overlay.type) {
-        //     case "marker":
-        //         latLngs = event.overlay.position;
-        //         break;
-        //     case "polygon":
-        //         latLngs = event.overlay.getPath();
-        //         break;
-        //     case "rectangle":
-        //         latLngs = event.overlay.bounds;
-        //         break;
-        // }
-
-        // var guid = getUID()
-        // this.overlays[guid] = {
-        //     guid: guid,
-        //     type: event.type,
-        //     latLngs: latLngs
-        // }
+      
     }
 
     overlayClicked(a) {

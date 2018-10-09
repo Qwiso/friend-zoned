@@ -10,7 +10,16 @@ export class GoogleMap extends Component {
         this.setState({
             map_height: window.innerHeight - 45
         })
-        let map = new MapController()
+        new MapController()
+        window.addEventListener('map_overlay_drawn', function(e){
+            console.log(e)
+        })
+        window.addEventListener('map_overlay_click', function(e){
+            console.log(e)
+        })
+        window.addEventListener('map_overlay_rightclick', function(e){
+            console.log(e)
+        })
     }
 
     render() {
