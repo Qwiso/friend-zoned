@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import { Map, Marker, InfoWindow, GoogleApiWrapper } from 'google-maps-react'
 import { faMapPin } from '@fortawesome/free-solid-svg-icons'
+import { testing } from '../MapStyles'
+
 const foo = faMapPin
 const icon = {
     path: foo.icon[4],
@@ -49,6 +51,7 @@ class MapView extends Component {
 
         return (
             <Map
+                styles={testing}
                 onClick={this.onMapClicked}
                 google={this.props.google} 
                 zoom={8}
