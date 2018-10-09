@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import { Helmet } from 'react-helmet'
 
 export class GoogleMap extends Component {
     state = {
@@ -16,9 +15,6 @@ export class GoogleMap extends Component {
         return (
             <div className="row">
                 <div id="map" style={{width: "100vw", height: this.state.map_height}}></div>
-                <Helmet>
-                    <script src="/js/bundle.js"></script>
-                </Helmet>
             </div>
         )
     }
