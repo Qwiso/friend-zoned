@@ -1,25 +1,55 @@
 import React, { Component } from 'react'
-import { Map, InfoWindow, Marker, GoogleApiWrapper } from 'google-maps-react'
+import { Map, Marker, InfoWindow, GoogleApiWrapper } from 'google-maps-react'
+import { faMapPin } from '@fortawesome/free-solid-svg-icons'
+const foo = faMapPin
+const icon = {
+    path: foo.icon[4],
+    scale: 0.075,
+    strokeColor: '#000',
+    strokeWeight: 1,
+    fillColor: '#111',
+    fillOpacity: 0.5,
+    anchor: { x: foo.icon[0]/2, y: foo.icon[1] }
+}
 
 class MapView extends Component {
-
-    onMarkerClick = (e) => {
-        console.log('[onMarkerClick]', e)
+    state = {
+        markers: [],
+        showingInfoWindow: false,
+        activeMarker: {},
+        selectedPlace: {},
     }
 
-    onMouseoverMarker = (e) => {
-        console.log('[onMouseoverMarker]', e)
+    onMarkerClick = (a, b, e) => {
+        this.setState({
+            selectedPlace: a,
+            activeMarker: b,
+            showingInfoWindow: true
+        })
     }
 
-    onMapClicked = (e) => {
-        console.log('[onMapClicked]', e)
+    onMapClicked = (a, b, e) => {
+        if (this.state.showingInfoWindow) {
+            this.setState({
+                showingInfoWindow: false,
+                activeMarker: null
+            })
+        } else {
+            this.setState({
+                markers: [...this.state.markers, {lat:e.latLng.lat(), lng:e.latLng.lng()}]
+            })
+        }
     }
-
 
     render() {
-        console.log(this.props);
+                
+        let markerRender = this.state.markers.map((marker, index) => {
+            return <Marker draggable={true} name={index} onClick={this.onMarkerClick} key={index} position={marker} animation={window.google.maps.Animation.DROP} icon={icon}/>
+        })
+
         return (
-            <Map 
+            <Map
+                onClick={this.onMapClicked}
                 google={this.props.google} 
                 zoom={8}
                 initialCenter={{
@@ -27,18 +57,12 @@ class MapView extends Component {
                     lng: -84.35267661111448 
                 }}>
 
-                <Marker 
-                    onClick={this.onMarkerClick}
-                    name={'current location'} 
-                    position={{
-                        lat: 33.83008972168741,
-                        lng: -84.35267661111448 
-                    }}
-                />
-                <InfoWindow onClose={this.onInfoWindowClose}>
-                    <div>
-                        {/* <h1>{this.state.selectedPlace.name}</h1> */}
-                    </div>
+                {markerRender}
+
+                <InfoWindow 
+                    marker={this.state.activeMarker}
+                    visible={this.state.showingInfoWindow}>
+                    <h1>{this.state.selectedPlace.name}</h1>
                 </InfoWindow>
             </Map>
         )
