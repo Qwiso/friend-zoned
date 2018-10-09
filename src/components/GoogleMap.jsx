@@ -1,21 +1,51 @@
 import React, { Component } from 'react'
+import { Map, InfoWindow, Marker, GoogleApiWrapper } from 'google-maps-react'
 
-export class GoogleMap extends Component {
-    state = {
-        
+class MapView extends Component {
+
+    onMarkerClick = (e) => {
+        console.log('[onMarkerClick]', e)
     }
 
-    componentDidMount() {
-        this.setState({
-            map_height: window.innerHeight - 45
-        })
+    onMouseoverMarker = (e) => {
+        console.log('[onMouseoverMarker]', e)
     }
 
-    render() { 
+    onMapClicked = (e) => {
+        console.log('[onMapClicked]', e)
+    }
+
+
+    render() {
+        console.log(this.props);
         return (
-            <div className="row">
-                <div id="map" style={{width: "100vw", height: this.state.map_height}}></div>
-            </div>
+            <Map 
+                google={this.props.google} 
+                zoom={8}
+                initialCenter={{
+                    lat: 33.83008972168741,
+                    lng: -84.35267661111448 
+                }}>
+
+                <Marker 
+                    onClick={this.onMarkerClick}
+                    name={'current location'} 
+                    position={{
+                        lat: 33.83008972168741,
+                        lng: -84.35267661111448 
+                    }}
+                />
+                <InfoWindow onClose={this.onInfoWindowClose}>
+                    <div>
+                        {/* <h1>{this.state.selectedPlace.name}</h1> */}
+                    </div>
+                </InfoWindow>
+            </Map>
         )
     }
 }
+
+
+export default GoogleApiWrapper({
+    apiKey: 'AIzaSyCYHkj8sSYIxtHm_guGKtkxqJTRTPF4luE'
+})(MapView)

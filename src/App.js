@@ -4,7 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import '@fortawesome/fontawesome-free/css/all.min.css'
 
 import { Main } from "./components/Main"
-import { GoogleMap } from "./components/GoogleMap"
+import MapView from "./components/GoogleMap"
 import { User } from "./components/User"
 import { Explore } from "./components/Explore"
 
@@ -30,7 +30,7 @@ class App extends Component {
             <div className="container-fluid">
             <Switch>
               <AuthRoute exact path="/" component={Main} />
-              <AuthRoute path="/map" component={GoogleMap} />
+              <AuthRoute path="/map" component={MapView} />
               <AuthRoute path="/user" component={User} />
               <AuthRoute path="/explore" component={Explore} />
             </Switch>
