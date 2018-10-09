@@ -1,4 +1,4 @@
-import { GoogleMap } from './GoogleMap'
+import { GoogleMap } from './MapController'
 
 const foo = new GoogleMap()
 

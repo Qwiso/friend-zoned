@@ -1,10 +1,10 @@
-export class GoogleMap
+export class MapController
  {
     constructor() {
         this.overlays = []
         var lat = 33.825858;
         var lng = -84.362226;
-        this.map = new google.maps.Map(document.getElementById("map"), {
+        this.map = new window.google.maps.Map(document.getElementById("map"), {
             zoom: 14,
             center: { lat: lat, lng: lng },
             clickableIcons: false,
@@ -20,11 +20,11 @@ export class GoogleMap
         this.map.addListener('click', this.mapClicked)
         this.map.addListener('tilesloaded', this.mapLoaded)
 
-        this.drawingManager = new google.maps.drawing.DrawingManager({
+        this.drawingManager = new window.google.maps.drawing.DrawingManager({
             drawingMode: null,
             drawingControl: true,
             drawingControlOptions: {
-                position: google.maps.ControlPosition.TOP_CENTER,
+                position: window.google.maps.ControlPosition.TOP_CENTER,
                 drawingModes: ["marker", "rectangle", "polygon"]
             }
         })
@@ -54,17 +54,17 @@ export class GoogleMap
           console.log(a)
         })
 
-        switch (event.overlay.type) {
-            case "marker":
-                latLngs = event.overlay.position;
-                break;
-            case "polygon":
-                latLngs = event.overlay.getPath();
-                break;
-            case "rectangle":
-                latLngs = event.overlay.bounds;
-                break;
-        }
+        // switch (event.overlay.type) {
+        //     case "marker":
+        //         latLngs = event.overlay.position;
+        //         break;
+        //     case "polygon":
+        //         latLngs = event.overlay.getPath();
+        //         break;
+        //     case "rectangle":
+        //         latLngs = event.overlay.bounds;
+        //         break;
+        // }
 
         // var guid = getUID()
         // this.overlays[guid] = {

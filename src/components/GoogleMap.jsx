@@ -1,24 +1,22 @@
 import React, { Component } from 'react'
-import { Helmet } from 'react-helmet'
+import { MapController } from '../js/MapController'
 
 export class GoogleMap extends Component {
     state = {
-        
+
     }
 
     componentDidMount() {
         this.setState({
             map_height: window.innerHeight - 45
         })
+        let map = new MapController()
     }
 
-    render() { 
+    render() {
         return (
             <div className="row">
                 <div id="map" style={{width: "100vw", height: this.state.map_height}}></div>
-                <Helmet>
-                    <script src="/js/bundle.js"></script>
-                </Helmet>
             </div>
         )
     }
