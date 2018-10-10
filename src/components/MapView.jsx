@@ -74,9 +74,9 @@ class MapView extends Component {
                 <section name="actionBar" className="d-block">
                     <div className="container-fluid fixed-bottom bg-dark" style={{height: "46px"}}>
                         <div className="row d-flex justify-content-around text-center">
-                            <div onClick={this.props.onToggleLeftSidebar} activeclass="bg-info" className="col"><i className="fas fa-lg fa-bars p-3 text-white"></i></div>
-                            <div onClick={this.toggleMarkerPlacement} activeclass="bg-info" className="col"><i className="fas fa-lg fa-question p-3 text-white"></i></div>
-                            <div onClick={this.toggleRightSidebar} activeclass="bg-info" className="col"><i className="fas fa-lg fa-question p-3 text-white"></i></div>
+                            <div onClick={this.props.onToggleSidebar} activeclass="bg-info" className="col"><i className="fas fa-lg fa-bars p-3 text-white"></i></div>
+                            <div activeclass="bg-info" className="col"><i className="fas fa-lg fa-question p-3 text-white"></i></div>
+                            <div activeclass="bg-info" className="col"><i className="fas fa-lg fa-question p-3 text-white"></i></div>
                         </div>
                     </div>
                 </section>

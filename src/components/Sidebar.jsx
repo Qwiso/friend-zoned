@@ -21,7 +21,7 @@ class Sidebar extends Component {
 
     render() { 
         return (
-            <div className="bg-dark text-white w-25 h-100 d-inline-block position-fixed">
+            <div className={this.props.visible ? "bg-dark text-white w-25 h-100 d-inline-block position-fixed" : "d-none"}>
                 <h2 className="text-center">Controls</h2>
                 {this.makeButton({
                     faIcon: "fa-map",

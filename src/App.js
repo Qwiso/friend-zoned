@@ -30,12 +30,12 @@ const renderMergedProps = (component, ...rest) => {
 
 class App extends Component {
   state = {
-    leftSidebarVisible: true
+    sidebarVisible: true
   }
 
-  onToggleLeftSidebar = () => {
+  onToggleSidebar = () => {
     this.setState({
-      leftSidebarVisible: !this.state.leftSidebarVisible
+      sidebarVisible: !this.state.sidebarVisible
     })
   }
 
@@ -45,7 +45,7 @@ class App extends Component {
         <div>
           <section name="content">
             <div className="container-fluid p-0">
-              <AuthRoute exact path="/" component={MapView} onToggleLeftSidebar={this.onToggleLeftSidebar} />
+              <AuthRoute exact path="/" component={MapView} onToggleSidebar={this.onToggleSidebar} />
             {/* <Switch>
               <AuthRoute exact path="/" component={Main} />
               <AuthRoute path="/map" component={MapView} />
@@ -54,7 +54,7 @@ class App extends Component {
             </Switch> */}
             </div>
           </section>
-          <Sidebar />
+          <Sidebar visible={this.state.sidebarVisible} />
         </div>
       </BrowserRouter>
     )
