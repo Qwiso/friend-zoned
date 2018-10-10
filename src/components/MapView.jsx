@@ -3,15 +3,14 @@ import { Map, Marker, InfoWindow, GoogleApiWrapper } from 'google-maps-react'
 import { faMapPin } from '@fortawesome/free-solid-svg-icons'
 import { testing } from '../MapStyles'
 
-const foo = faMapPin
 const icon = {
-    path: foo.icon[4],
+    path: faMapPin.icon[4],
     scale: 0.075,
     strokeColor: '#000',
     strokeWeight: 1,
     fillColor: '#fff',
     fillOpacity: 0.66,
-    anchor: { x: foo.icon[0]/2, y: foo.icon[1] }
+    anchor: { x: faMapPin.icon[0]/2, y: faMapPin.icon[1] }
 }
 
 class MapView extends Component {
@@ -23,8 +22,14 @@ class MapView extends Component {
         selectedPlace: {},
     }
 
+    onInfoWindowClose = () => {
+        this.setState({
+            activeMarker: null,
+            showingInfoWindow: false
+        })
+    }
+
     onMarkerClick = (a, b, e) => {
-        // a: icon, name, position
         this.setState({
             selectedPlace: a,
             activeMarker: b,
@@ -51,36 +56,26 @@ class MapView extends Component {
         })
 
         return (
-            <div>
-                <Map
-                    style={{marginBottom: 46}}
-                    styles={this.state.mapStyle}
-                    onClick={this.onMapClicked}
-                    google={this.props.google} 
-                    zoom={10}
-                    initialCenter={{
-                        lat: 33.83008972168741,
-                        lng: -84.35267661111448
-                    }}>
+            <Map
+                style={{marginBottom: 46}}
+                styles={this.state.mapStyle}
+                onClick={this.onMapClicked}
+                google={this.props.google} 
+                zoom={10}
+                initialCenter={{
+                    lat: 33.83008972168741,
+                    lng: -84.35267661111448
+                }}>
 
-                    {markerRender}
+                {markerRender}
 
-                    <InfoWindow 
-                        marker={this.state.activeMarker}
-                        visible={this.state.showingInfoWindow}>
-                        <h1>{this.state.selectedPlace.name}</h1>
-                    </InfoWindow>
-                </Map>
-                <section name="actionBar" className="d-block">
-                    <div className="container-fluid fixed-bottom bg-dark" style={{height: "46px"}}>
-                        <div className="row d-flex justify-content-around text-center">
-                            <div onClick={this.props.onToggleSidebar} activeclass="bg-info" className="col"><i className="fas fa-lg fa-bars p-3 text-white"></i></div>
-                            <div activeclass="bg-info" className="col"><i className="fas fa-lg fa-question p-3 text-white"></i></div>
-                            <div activeclass="bg-info" className="col"><i className="fas fa-lg fa-question p-3 text-white"></i></div>
-                        </div>
-                    </div>
-                </section>
-            </div>
+                <InfoWindow
+                    onClose={this.onInfoWindowClose}
+                    marker={this.state.activeMarker}
+                    visible={this.state.showingInfoWindow}>
+                    <h1>{this.state.selectedPlace.name}</h1>
+                </InfoWindow>
+            </Map>
         )
     }
 }
