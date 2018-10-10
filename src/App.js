@@ -56,6 +56,14 @@ class App extends Component {
     })
   }
 
+  actionButtonMouseEnter = (a) => {
+    a.currentTarget.classList.add("bg-info")
+  }
+
+  actionButtonMouseLeave = (a) => {
+    a.currentTarget.classList.remove("bg-info")
+  }
+
   render() {
     return (
       <BrowserRouter>
@@ -72,9 +80,9 @@ class App extends Component {
           <section name="actionBar" className="d-block">
             <div className="container-fluid fixed-bottom bg-dark" style={{height: "46px"}}>
               <div className="row d-flex justify-content-around text-center">
-                <div onClick={this.toggleLeftSidebar} activeclass="bg-info" className="col"><i className="fas fa-lg fa-bars p-3 text-white"></i></div>
-                <div onClick={this.toggleHelpWindow} activeclass="bg-info" className="col"><i className="fas fa-lg fa-question p-3 text-white"></i></div>
-                <div onClick={this.toggleRightSidebar} activeclass="bg-info" className="col"><i className="fas fa-lg fa-bars p-3 text-white"></i></div>
+                <div style={{cursor: "pointer"}} onClick={this.toggleLeftSidebar} onMouseEnter={this.actionButtonMouseEnter} onMouseLeave={this.actionButtonMouseLeave} className="col"><i className="fas fa-lg fa-list p-3 text-white"></i></div>
+                <div style={{cursor: "pointer"}} onClick={this.toggleHelpWindow} onMouseEnter={this.actionButtonMouseEnter} onMouseLeave={this.actionButtonMouseLeave} className="col"><i className="fas fa-lg fa-question p-3 text-white"></i></div>
+                <div style={{cursor: "pointer"}} onClick={this.toggleRightSidebar} onMouseEnter={this.actionButtonMouseEnter} onMouseLeave={this.actionButtonMouseLeave} className="col"><i className="fas fa-lg fa-list fa-flip-horizontal p-3 text-white"></i></div>
               </div>
             </div>
           </section>
