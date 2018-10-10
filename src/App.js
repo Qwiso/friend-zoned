@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom'
+import Sidebar from './components/Sidebar'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import '@fortawesome/fontawesome-free/css/all.min.css'
 
@@ -53,11 +54,7 @@ class App extends Component {
             </Switch> */}
             </div>
           </section>
-          <div className="row position-fixed">
-            <div className="col-4">
-              <h1>hi</h1>
-            </div>
-          </div>
+          <Sidebar />
         </div>
       </BrowserRouter>
     )

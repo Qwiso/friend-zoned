@@ -60,7 +60,7 @@ class MapView extends Component {
                     zoom={10}
                     initialCenter={{
                         lat: 33.83008972168741,
-                        lng: -84.35267661111448 
+                        lng: -84.35267661111448
                     }}>
 
                     {markerRender}
