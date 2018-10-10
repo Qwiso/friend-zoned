@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import '../css/navbar.css'
+import '../css/sidebar.css'
 
 class Sidebar extends Component {
     makeButton = ({faIcon, text, route}) => {
@@ -21,8 +21,8 @@ class Sidebar extends Component {
 
     render() { 
         return (
-            <div className={this.props.visible ? "bg-dark text-white w-25 h-100 d-inline-block position-fixed" : "d-none"}>
-                <h2 className="text-center">Controls</h2>
+            <div style={{width: "150px", left: this.props.visible ? '0px' : '-150px'}} className={"transition-1s bg-dark text-white h-100 d-inline-block position-fixed"}>
+                {/* <h3 className="text-center">Controls</h3> */}
                 {this.makeButton({
                     faIcon: "fa-map",
                     text: "Map",
