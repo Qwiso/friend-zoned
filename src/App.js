@@ -11,22 +11,40 @@ const checkAuth = () => {
   return true
 }
 
-const AuthRoute = ({ component: Component, ...rest }) => (
+const AuthRoute = ({ component, ...rest }) => (
   <Route {...rest} render={props => (
     checkAuth() ?
-    <Component {...props} /> :
+    // <Component {...props} /> :
+    renderMergedProps(component, props, rest) :
     <Redirect to={{pathname: '/login'}} />
   )} />
 )
 
+const renderMergedProps = (component, ...rest) => {
+  const finalProps = Object.assign({}, ...rest);
+  return (
+    React.createElement(component, finalProps)
+  );
+}
+
 class App extends Component {
+  state = {
+    leftSidebarVisible: true
+  }
+
+  onToggleLeftSidebar = () => {
+    this.setState({
+      leftSidebarVisible: !this.state.leftSidebarVisible
+    })
+  }
+
   render() {
     return (
       <BrowserRouter>
         <div>
           <section name="content">
             <div className="container-fluid p-0">
-              <AuthRoute exact path="/" component={MapView} />
+              <AuthRoute exact path="/" component={MapView} onToggleLeftSidebar={this.onToggleLeftSidebar} />
             {/* <Switch>
               <AuthRoute exact path="/" component={Main} />
               <AuthRoute path="/map" component={MapView} />
@@ -35,6 +53,11 @@ class App extends Component {
             </Switch> */}
             </div>
           </section>
+          <div className="row position-fixed">
+            <div className="col-4">
+              <h1>hi</h1>
+            </div>
+          </div>
         </div>
       </BrowserRouter>
     )
