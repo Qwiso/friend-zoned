@@ -1,20 +1,12 @@
 import React, { Component } from 'react'
 import { Map, Marker, InfoWindow, GoogleApiWrapper } from 'google-maps-react'
-import { faMapPin } from '@fortawesome/free-solid-svg-icons'
+import { getMarkerIconByName } from './MarkerIcons'
 import { testing } from '../MapStyles'
-
-const icon = {
-    path: faMapPin.icon[4],
-    scale: 0.075,
-    strokeColor: '#000',
-    strokeWeight: 1,
-    fillColor: '#fff',
-    fillOpacity: 0.66,
-    anchor: { x: faMapPin.icon[0]/2, y: faMapPin.icon[1] }
-}
 
 class MapView extends Component {
     state = {
+        currentMarkerIcon: null,
+        markerIcons: getMarkerIconByName(['map-pin','glasses']),
         mapStyle: testing,
         markers: [],
         showingInfoWindow: false,
@@ -52,7 +44,7 @@ class MapView extends Component {
 
     render() {
         let markerRender = this.state.markers.map((marker, index) => {
-            return <Marker draggable={true} name={index} onClick={this.onMarkerClick} key={index} position={marker} animation={window.google.maps.Animation.DROP} icon={icon}/>
+            return <Marker draggable={true} name={index} onClick={this.onMarkerClick} key={index} position={marker} animation={window.google.maps.Animation.DROP} icon={this.state.markerIcons[0]}/>
         })
 
         return (
@@ -60,7 +52,7 @@ class MapView extends Component {
                 style={{marginBottom: 46}}
                 styles={this.state.mapStyle}
                 onClick={this.onMapClicked}
-                google={this.props.google} 
+                google={this.props.google}
                 zoom={10}
                 initialCenter={{
                     lat: 33.83008972168741,

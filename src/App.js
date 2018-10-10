@@ -4,6 +4,8 @@ import Sidebar from './components/Sidebar'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import '@fortawesome/fontawesome-free/css/all.min.css'
 
+import { SiteNavigation } from './components/SiteNavigation'
+import { MapToolbar } from './components/MapToolbar'
 import MapView from "./components/MapView"
 import { User } from "./components/User"
 import { Explore } from "./components/Explore"
@@ -22,25 +24,38 @@ const AuthRoute = ({ component, ...rest }) => (
 )
 
 const renderMergedProps = (component, ...rest) => {
-  const finalProps = Object.assign({}, ...rest);
+  const finalProps = Object.assign({}, ...rest)
   return (
     React.createElement(component, finalProps)
-  );
+  )
 }
 
 class App extends Component {
   state = {
-    sidebarVisible: false
+    helpWindowVisible: false,
+    leftSidebarVisible: false,
+    rightSidebarVisible: false
   }
 
-  toggleSidebar = () => {
+  toggleLeftSidebar = () => {
     this.setState({
-      sidebarVisible: !this.state.sidebarVisible
+      leftSidebarVisible: !this.state.leftSidebarVisible
+    })
+  }
+
+  toggleRightSidebar = () => {
+    this.setState({
+      rightSidebarVisible: !this.state.rightSidebarVisible
+    })
+  }
+
+  toggleHelpWindow = () => {
+    this.setState({
+      helpWindowVisible: !this.state.helpWindowVisible
     })
   }
 
   render() {
-    let sidebarVisible = this.state.sidebarVisible
     return (
       <BrowserRouter>
         <div>
@@ -56,13 +71,18 @@ class App extends Component {
           <section name="actionBar" className="d-block">
             <div className="container-fluid fixed-bottom bg-dark" style={{height: "46px"}}>
               <div className="row d-flex justify-content-around text-center">
-                <div onClick={this.toggleSidebar} activeclass="bg-info" className="col"><i className="fas fa-lg fa-bars p-3 text-white"></i></div>
-                <div activeclass="bg-info" className="col"><i className="fas fa-lg fa-question p-3 text-white"></i></div>
-                <div activeclass="bg-info" className="col"><i className="fas fa-lg fa-question p-3 text-white"></i></div>
+                <div onClick={this.toggleLeftSidebar} activeclass="bg-info" className="col"><i className="fas fa-lg fa-bars p-3 text-white"></i></div>
+                <div onClick={this.toggleHelpWindow} activeclass="bg-info" className="col"><i className="fas fa-lg fa-question p-3 text-white"></i></div>
+                <div onClick={this.toggleRightSidebar} activeclass="bg-info" className="col"><i className="fas fa-lg fa-bars p-3 text-white"></i></div>
               </div>
             </div>
           </section>
-          <Sidebar visible={sidebarVisible} />
+          <Sidebar visible={this.state.leftSidebarVisible} side="left">
+            <SiteNavigation />
+          </Sidebar>
+          <Sidebar visible={this.state.rightSidebarVisible} side="right">
+            <MapToolbar />
+          </Sidebar>
         </div>
       </BrowserRouter>
     )

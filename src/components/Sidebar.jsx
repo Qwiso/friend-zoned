@@ -2,6 +2,10 @@ import React, { Component } from 'react'
 import '../css/sidebar.css'
 
 class Sidebar extends Component {
+    state = {
+        side: this.props.side || "left"
+    }
+
     makeButton = ({faIcon, text, route}) => {
         return (
             <div className="nav-button">
@@ -20,21 +24,23 @@ class Sidebar extends Component {
     }
 
     render() { 
-        return (
-            <div style={{width: "150px", left: this.props.visible ? '0px' : '-150px'}} className={"transition-1s bg-dark text-white h-100 d-inline-block position-fixed"}>
-                {/* <h3 className="text-center">Controls</h3> */}
-                {this.makeButton({
-                    faIcon: "fa-map",
-                    text: "Map",
-                    route: "/"
-                })}
-                {this.makeButton({
-                    faIcon: "fa-user",
-                    text: "Profile",
-                    route: "/profile"
-                })}
-            </div>
-        )
+        switch (this.state.side) {
+            case "left":
+            return (
+                <div style={{width: "150px", left: this.props.visible ? '0px' : '-150px'}} className={"transition-1s bg-dark text-white h-100 d-inline-block position-fixed"}>
+                    {this.props.children}
+                </div>
+            )
+            case "right":
+            return (
+                <div style={{width: "150px", right: this.props.visible ? '0px' : '-150px'}} className={"transition-1s bg-dark text-white h-100 d-inline-block position-fixed"}>
+                    {this.props.children}
+                </div>
+            )
+            default:
+            return null
+        }
+        
     }
 }
  
