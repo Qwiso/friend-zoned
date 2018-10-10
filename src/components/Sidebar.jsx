@@ -27,15 +27,19 @@ class Sidebar extends Component {
         switch (this.state.side) {
             case "left":
             return (
-                <div style={{width: "150px", left: this.props.visible ? '0px' : '-150px'}} className={"transition-1s bg-dark text-white h-100 d-inline-block position-fixed"}>
-                    {this.props.children}
-                </div>
+                <section name="leftsidebar">
+                    <div style={{width: "150px", left: this.props.visible ? '0px' : '-150px'}} className={"transition-1s bg-dark text-white h-100 d-inline-block position-fixed"}>
+                        {this.props.children}
+                    </div>
+                </section>
             )
             case "right":
             return (
-                <div style={{width: "150px", right: this.props.visible ? '0px' : '-150px'}} className={"transition-1s bg-dark text-white h-100 d-inline-block position-fixed"}>
-                    {this.props.children}
-                </div>
+                <section name="rightsidebar">
+                    <div style={{width: "150px", right: this.props.visible ? '0px' : '-150px'}} className={"transition-1s bg-dark text-white h-100 d-inline-block position-fixed"}>
+                        {this.props.children}
+                    </div>
+                </section>
             )
             default:
             return null

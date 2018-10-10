@@ -4,6 +4,7 @@ import Sidebar from './components/Sidebar'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import '@fortawesome/fontawesome-free/css/all.min.css'
 
+import { HelpWindow } from './components/HelpWindow'
 import { SiteNavigation } from './components/SiteNavigation'
 import { MapToolbar } from './components/MapToolbar'
 import MapView from "./components/MapView"
@@ -77,6 +78,7 @@ class App extends Component {
               </div>
             </div>
           </section>
+          <HelpWindow visible={this.state.helpWindowVisible} />
           <Sidebar visible={this.state.leftSidebarVisible} side="left">
             <SiteNavigation />
           </Sidebar>
