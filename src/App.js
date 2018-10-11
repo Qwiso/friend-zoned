@@ -33,9 +33,9 @@ const renderMergedProps = (component, ...rest) => {
 
 class App extends Component {
   state = {
-    helpWindowVisible: false,
-    leftSidebarVisible: false,
-    rightSidebarVisible: false
+    helpWindowVisible: true,
+    leftSidebarVisible: true,
+    rightSidebarVisible: true
   }
 
   toggleLeftSidebar = () => {
