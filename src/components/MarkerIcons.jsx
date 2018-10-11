@@ -2,7 +2,7 @@ import { library, findIconDefinition } from '@fortawesome/fontawesome-svg-core'
 import { fas } from '@fortawesome/free-solid-svg-icons'
 library.add(fas)
 
-export function getMarkerIconByName(iconName) {
+export function getMarkerSVGByName(iconName) {
     let icon = findIconDefinition({ prefix: 'fas', iconName: iconName }).icon
 
     return {

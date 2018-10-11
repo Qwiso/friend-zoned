@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import '../css/sidebar.css'
 
-class Sidebar extends Component {
+export class Sidebar extends Component {
     state = {
         side: this.props.side || "left"
     }
@@ -30,5 +30,3 @@ class Sidebar extends Component {
         
     }
 }
- 
-export default Sidebar
