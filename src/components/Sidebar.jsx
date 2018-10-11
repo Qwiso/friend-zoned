@@ -3,6 +3,7 @@ import '../css/sidebar.css'
 
 export class Sidebar extends Component {
     state = {
+        size: this.props.size || "150px",
         side: this.props.side || "left"
     }
 
@@ -11,7 +12,7 @@ export class Sidebar extends Component {
             case "left":
             return (
                 <section name="leftsidebar">
-                    <div style={{width: "150px", maxWidth: "50%", left: this.props.visible ? '0px' : '-150px'}} className={"transition-1s bg-dark text-white h-100 d-inline-block position-fixed"}>
+                    <div style={{width: this.state.size, maxWidth: "50%", left: this.props.visible ? '0px' : '-'+this.state.size}} className={"transition-1s bg-dark text-white h-100 d-inline-block position-fixed"}>
                         {this.props.children}
                     </div>
                 </section>
@@ -19,7 +20,7 @@ export class Sidebar extends Component {
             case "right":
             return (
                 <section name="rightsidebar">
-                    <div style={{width: "150px", maxWidth: "50%", right: this.props.visible ? '0px' : '-150px'}} className={"transition-1s bg-dark text-white h-100 d-inline-block position-fixed"}>
+                    <div style={{width: this.state.size, maxWidth: "50%", right: this.props.visible ? '0px' : '-'+this.state.size}} className={"transition-1s bg-dark text-white h-100 d-inline-block position-fixed"}>
                         {this.props.children}
                     </div>
                 </section>

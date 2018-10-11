@@ -3,8 +3,9 @@ import { Map, Marker, InfoWindow, GoogleApiWrapper } from 'google-maps-react'
 import { getMarkerSVGByName } from './MarkerIcons'
 import { testing } from '../MapStyles'
 
+import { MarkerEditor } from './MarkerEditor'
 import { HelpWindow } from './HelpWindow'
-import { SiteNavigation } from './SiteNavigation'
+// import { SiteNavigation } from './SiteNavigation'
 import { MapToolbar } from './MapToolbar'
 import { Sidebar } from './Sidebar'
 
@@ -12,7 +13,7 @@ class MapView extends Component {
     state = {
         helpWindowVisible: false,
         leftSidebarVisible: true,
-        rightSidebarVisible: true,
+        markerEditorVisible: false,
         currentMarkerSVG: getMarkerSVGByName('map-pin'),
         mapStyle: testing,
         markers: [],
@@ -58,19 +59,21 @@ class MapView extends Component {
         this.setState({
             selectedPlace: a,
             activeMarker: b,
-            showingInfoWindow: true
+            showingInfoWindow: true,
+            markerEditorVisible: true
         })
     }
 
     onMapClicked = (a, b, e) => {
-        if (this.state.showingInfoWindow) {
+        if (this.state.showingInfoWindow || this.state.markerEditorVisible) {
             this.setState({
                 showingInfoWindow: false,
+                markerEditorVisible: false,
                 activeMarker: null
             })
         } else {
             this.setState({
-                markers: [...this.state.markers, {icon: this.state.currentMarkerSVG, lat:e.latLng.lat(), lng:e.latLng.lng()}]
+                markers: [...this.state.markers, { icon: this.state.currentMarkerSVG, lat:e.latLng.lat(), lng:e.latLng.lng() }]
             })
         }
     }
@@ -83,7 +86,15 @@ class MapView extends Component {
 
     render() {
         let markerRender = this.state.markers.map((marker, index) => {
-            return <Marker draggable={true} name={index} onClick={this.onMarkerClick} key={index} position={marker} animation={window.google.maps.Animation.DROP} icon={marker.icon}/>
+            return <Marker
+                key={index}
+                name={index}
+                position={marker}
+                icon={marker.icon}
+                draggable={true}
+                animation={window.google.maps.Animation.DROP}
+                onClick={this.onMarkerClick}
+            />
         })
 
         return (
@@ -101,12 +112,9 @@ class MapView extends Component {
 
                     {markerRender}
 
-                    <InfoWindow
-                        onClose={this.onInfoWindowClose}
-                        marker={this.state.activeMarker}
-                        visible={this.state.showingInfoWindow}>
-                        <h1>{this.state.selectedPlace.name}</h1>
-                    </InfoWindow>
+                    {/* <InfoWindow  onClose={this.onInfoWindowClose} marker={this.state.activeMarker} visible={this.state.showingInfoWindow}>
+                        <InfoWindowElement foo={this.state.selectedPlace} />
+                    </InfoWindow> */}
                 </Map>
                 <section name="actionBar" className="d-block">
                     <div className="container-fluid fixed-bottom bg-dark" style={{height: "46px"}}>
@@ -118,9 +126,9 @@ class MapView extends Component {
                     </div>
                 </section>
                 <HelpWindow visible={this.state.helpWindowVisible} />
-                {/* <Sidebar visible={this.state.leftSidebarVisible} side="left">
-                    <SiteNavigation />
-                </Sidebar> */}
+                <Sidebar visible={this.state.markerEditorVisible} side="left" size={"300px"}>
+                    <MarkerEditor marker={this.state.selectedPlace} />
+                </Sidebar>
                 <Sidebar visible={this.state.rightSidebarVisible} side="right">
                     <MapToolbar onIconClick={this.toolbarIconClicked} />
                 </Sidebar>

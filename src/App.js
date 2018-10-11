@@ -38,7 +38,8 @@ class App extends Component {
             <div className="container-fluid p-0">
               <Switch>
                 <AuthRoute exact path="/" component={MapView} />
-                <AuthRoute path="/profile" component={User} />
+                <AuthRoute exact path="/profile" component={User} />
+                <AuthRoute exact path="/profile/:id" component={User} />
               </Switch>
             </div>
           </section>
