@@ -21,7 +21,7 @@ class MapView extends Component {
         markers: [],
         showingInfoWindow: false,
         activeMarker: {},
-        selectedPlace: {}
+        selectedPlace: null
     }
 
     toggleLeftSidebar = () => {
@@ -52,6 +52,7 @@ class MapView extends Component {
 
     onInfoWindowClose = () => {
         this.setState({
+            selectedPlace: null,
             activeMarker: null,
             showingInfoWindow: false
         })
@@ -71,20 +72,22 @@ class MapView extends Component {
             this.setState({
                 showingInfoWindow: false,
                 markerEditorVisible: false,
+                selectedPlace: null,
                 activeMarker: null
             })
         } else {
             let newMarker = new QMarker({
-                markerIconName: this.state.currentMarkerIconName,
-                markerSVG: this.state.currentMarkerSVG,
+                name: "new marker",
+                description: "",
                 position: {
                     lat: e.latLng.lat(),
                     lng: e.latLng.lng()
                 },
-                name: "new marker",
-                description: ""
+                markerIconName: this.state.currentMarkerIconName,
+                markerSVG: this.state.currentMarkerSVG
             })
             this.setState({
+                selectedPlace: null,
                 markers: [...this.state.markers, newMarker]
             })
         }
