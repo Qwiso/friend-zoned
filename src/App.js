@@ -34,7 +34,6 @@ class App extends Component {
   render() {
     return (
       <BrowserRouter>
-        <div>
           <section name="content">
             <div className="container-fluid p-0">
               <Switch>
@@ -43,7 +42,6 @@ class App extends Component {
               </Switch>
             </div>
           </section>
-        </div>
       </BrowserRouter>
     )
   }

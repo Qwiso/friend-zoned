@@ -111,16 +111,16 @@ class MapView extends Component {
                 <section name="actionBar" className="d-block">
                     <div className="container-fluid fixed-bottom bg-dark" style={{height: "46px"}}>
                         <div className="d-flex justify-content-around text-center">
-                            <div style={{cursor: "pointer"}} onClick={this.toggleLeftSidebar} onMouseEnter={this.actionButtonMouseEnter} onMouseLeave={this.actionButtonMouseLeave} className="col"><i className="fas fa-lg fa-list p-3 text-white"></i></div>
+                            {/* <div style={{cursor: "pointer"}} onClick={this.toggleLeftSidebar} onMouseEnter={this.actionButtonMouseEnter} onMouseLeave={this.actionButtonMouseLeave} className="col"><i className="fas fa-lg fa-list p-3 text-white"></i></div> */}
                             <div style={{cursor: "pointer"}} onClick={this.toggleHelpWindow} onMouseEnter={this.actionButtonMouseEnter} onMouseLeave={this.actionButtonMouseLeave} className="col"><i className="fas fa-lg fa-question p-3 text-white"></i></div>
                             <div style={{cursor: "pointer"}} onClick={this.toggleRightSidebar} onMouseEnter={this.actionButtonMouseEnter} onMouseLeave={this.actionButtonMouseLeave} className="col"><i className="fas fa-lg fa-list fa-flip-horizontal p-3 text-white"></i></div>
                         </div>
                     </div>
                 </section>
                 <HelpWindow visible={this.state.helpWindowVisible} />
-                <Sidebar visible={this.state.leftSidebarVisible} side="left">
+                {/* <Sidebar visible={this.state.leftSidebarVisible} side="left">
                     <SiteNavigation />
-                </Sidebar>
+                </Sidebar> */}
                 <Sidebar visible={this.state.rightSidebarVisible} side="right">
                     <MapToolbar onIconClick={this.toolbarIconClicked} />
                 </Sidebar>
