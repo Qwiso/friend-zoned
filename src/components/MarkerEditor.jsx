@@ -4,24 +4,19 @@ export class MarkerEditor extends Component {
 
     state = { }
 
-    componentDidMount() {
-        if (this.props.marker)
-        this.setState({
-            editable: false,
-            name: this.props.marker.name,
-            description: this.props.marker.description,
-            icon: {
-                fillColor: this.props.marker.icon.fillColor,
-                fillOpacity: this.props.marker.icon.fillOpacity,
-                strokeColor: this.props.marker.icon.strokeColor,
-                strokeWeight: this.props.marker.icon.strokeWeight
-            }
-        })
-    }
-
-    componentDidUpdate() {
-        this.props.marker ? this.state.editable = true : this.state.editable = false
-    }
+    // componentDidMount() {
+    //     this.setState({
+    //         editable: false,
+    //         name: this.props.marker.name,
+    //         description: this.props.marker.description,
+    //         icon: {
+    //             fillColor: this.props.marker.icon.fillColor,
+    //             fillOpacity: this.props.marker.icon.fillOpacity,
+    //             strokeColor: this.props.marker.icon.strokeColor,
+    //             strokeWeight: this.props.marker.icon.strokeWeight
+    //         }
+    //     })
+    // }
 
     onFillColorChange = () => {}
     onFillOpacityChange = () => {}
@@ -29,7 +24,6 @@ export class MarkerEditor extends Component {
     onStrokeWeightChange = () => {}
 
     render() {
-        console.log(this.state)
         return <div></div>
 
         return (
