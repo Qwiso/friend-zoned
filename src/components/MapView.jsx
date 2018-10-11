@@ -8,18 +8,20 @@ import { HelpWindow } from './HelpWindow'
 // import { SiteNavigation } from './SiteNavigation'
 import { MapToolbar } from './MapToolbar'
 import { Sidebar } from './Sidebar'
+import { QMarker } from '../models/QMarker';
 
 class MapView extends Component {
     state = {
         helpWindowVisible: false,
         leftSidebarVisible: true,
         markerEditorVisible: false,
+        currentMarkerIconName: 'map-pin',
         currentMarkerSVG: getMarkerSVGByName('map-pin'),
         mapStyle: testing,
         markers: [],
         showingInfoWindow: false,
         activeMarker: {},
-        selectedPlace: {},
+        selectedPlace: {}
     }
 
     toggleLeftSidebar = () => {
@@ -72,14 +74,25 @@ class MapView extends Component {
                 activeMarker: null
             })
         } else {
+            let newMarker = new QMarker({
+                markerIconName: this.state.currentMarkerIconName,
+                markerSVG: this.state.currentMarkerSVG,
+                position: {
+                    lat: e.latLng.lat(),
+                    lng: e.latLng.lng()
+                },
+                name: "new marker",
+                description: ""
+            })
             this.setState({
-                markers: [...this.state.markers, { icon: this.state.currentMarkerSVG, lat:e.latLng.lat(), lng:e.latLng.lng() }]
+                markers: [...this.state.markers, newMarker]
             })
         }
     }
 
     toolbarIconClicked = (e) => {
         this.setState({
+            currentMarkerIconName: e.currentTarget.dataset.iconName,
             currentMarkerSVG: getMarkerSVGByName(e.currentTarget.dataset.iconName),
         })
     }
@@ -89,8 +102,8 @@ class MapView extends Component {
             return <Marker
                 key={index}
                 name={index}
-                position={marker}
-                icon={marker.icon}
+                position={marker.position}
+                icon={marker.markerSVG}
                 draggable={true}
                 animation={window.google.maps.Animation.DROP}
                 onClick={this.onMarkerClick}
@@ -117,7 +130,7 @@ class MapView extends Component {
                     </InfoWindow> */}
                 </Map>
                 <section name="actionBar" className="d-block">
-                    <div className="container-fluid fixed-bottom bg-dark" style={{height: "46px"}}>
+                    <div className="container-fluid p-0 fixed-bottom bg-dark" style={{height: "46px"}}>
                         <div className="d-flex justify-content-around text-center">
                             {/* <div style={{cursor: "pointer"}} onClick={this.toggleLeftSidebar} onMouseEnter={this.actionButtonMouseEnter} onMouseLeave={this.actionButtonMouseLeave} className="col"><i className="fas fa-lg fa-list p-3 text-white"></i></div> */}
                             <div style={{cursor: "pointer"}} onClick={this.toggleHelpWindow} onMouseEnter={this.actionButtonMouseEnter} onMouseLeave={this.actionButtonMouseLeave} className="col"><i className="fas fa-lg fa-question p-3 text-white"></i></div>
