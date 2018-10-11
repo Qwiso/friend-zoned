@@ -4,7 +4,9 @@ export class User extends Component {
     state = {  }
     render() { 
         return (
-            <h1>user</h1>
+            <div className="position-absolute">
+                <h1>hi</h1>
+            </div>
         )
     }
 }

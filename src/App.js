@@ -9,7 +9,6 @@ import { SiteNavigation } from './components/SiteNavigation'
 import { MapToolbar } from './components/MapToolbar'
 import MapView from "./components/MapView"
 import { User } from "./components/User"
-import { Explore } from "./components/Explore"
 
 const checkAuth = () => {
   return true
@@ -72,8 +71,7 @@ class App extends Component {
             <div className="container-fluid p-0">
               <Switch>
                 <AuthRoute exact path="/" component={MapView} />
-                <AuthRoute path="/user" component={User} />
-                <AuthRoute path="/explore" component={Explore} />
+                <AuthRoute path="/profile" component={User} />
               </Switch>
             </div>
           </section>

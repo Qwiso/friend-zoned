@@ -6,7 +6,7 @@ import { testing } from '../MapStyles'
 class MapView extends Component {
     state = {
         currentMarkerIcon: null,
-        markerIcons: getMarkerIconByName(['map-pin','glasses']),
+        markerIcons: getMarkerIconByName('map-pin'),
         mapStyle: testing,
         markers: [],
         showingInfoWindow: false,
@@ -44,7 +44,7 @@ class MapView extends Component {
 
     render() {
         let markerRender = this.state.markers.map((marker, index) => {
-            return <Marker draggable={true} name={index} onClick={this.onMarkerClick} key={index} position={marker} animation={window.google.maps.Animation.DROP} icon={this.state.markerIcons[0]}/>
+            return <Marker draggable={true} name={index} onClick={this.onMarkerClick} key={index} position={marker} animation={window.google.maps.Animation.DROP} icon={this.state.markerIcons}/>
         })
 
         return (
