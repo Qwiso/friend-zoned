@@ -2,7 +2,25 @@ import React, { Component } from 'react'
 
 export class MapToolbar extends Component {
 
-    state = { }
+    state = {
+        selectedIcon: null
+    }
+
+    shouldComponentUpdate() {
+        if (this.props.placeMarker) return true
+        return false
+    }
+
+    componentDidUpdate() {
+        if (!this.props.placeMarker) {
+            let oldIcon = window.document.querySelector('#markerIcons div.text-info')
+            if (oldIcon)
+            {
+                oldIcon.classList.remove('text-info')
+                oldIcon.classList.add('text-white')
+            }
+        }
+    }
 
     componentWillMount() {
         this.setState({
@@ -14,7 +32,7 @@ export class MapToolbar extends Component {
         let stack = []
 
         iconNames.forEach((value, key) => {
-            let className = key === 0 ? "text-info col-6 mt-3 py-3 border" : "text-white col-6 mt-3 py-3 border"
+            let className = "text-white col-6 mt-3 py-3 border pointer"
             stack.push(<div onClick={this.markerIconClicked} key={key} data-icon-name={value} className={className}><i className={"fa fa-fw fa-2x fa-" + value}></i></div>)
         })
 
@@ -25,6 +43,7 @@ export class MapToolbar extends Component {
         this.setState({
             selectedIcon: e.currentTarget
         })
+
         this.props.onIconClick(e)
 
         let oldIcon = window.document.querySelector('#markerIcons div.text-info')
@@ -38,6 +57,7 @@ export class MapToolbar extends Component {
     }
 
     render() {
+        console.log('toolbar render')
         return (
             <div>
                 <p className="pt-2 mb-0 text-center">Marker</p>
