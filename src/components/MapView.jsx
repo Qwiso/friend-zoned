@@ -98,6 +98,7 @@ class MapView extends Component {
         // console.log(JSON.stringify(this.state.userMarkers))
     }
 
+    // TODO get this logic working from within the MarkerEditor component
     //#region markerEditorEvents
     onMarkerNameChange = (e) => {
         let marker = this.state.activeMarker
@@ -163,8 +164,6 @@ class MapView extends Component {
                 onClick={this.onMarkerClick}
             />
         })
-
-        console.log(markerRender)
 
         return (
             <div>
