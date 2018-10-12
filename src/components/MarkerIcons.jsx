@@ -9,9 +9,9 @@ export function getMarkerSVGByName(iconName) {
         anchor: { x: icon[0]/2, y: icon[1] },
         path: icon[4],
         scale: 0.075,
-        strokeColor: '#000',
+        strokeColor: '#000000',
         strokeWeight: 1,
-        fillColor: '#fff',
+        fillColor: '#ffffff',
         fillOpacity: 0.66
     }
 }

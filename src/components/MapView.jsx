@@ -54,7 +54,7 @@ class MapView extends Component {
 
     onMarkerClick = (a, b, e) => {
         this.setState({
-            activeMarker: a,
+            activeMarker: this.state.userMarkers[a.index],
             markerEditorVisible: true
         })
     }
@@ -62,6 +62,7 @@ class MapView extends Component {
     onMapClicked = (a, b, e) => {
         if (this.state.placeMarker) {
             let newMarker = new QMarker({
+                index: this.state.userMarkers.length,
                 name: "new marker",
                 description: "",
                 position: {
@@ -97,17 +98,73 @@ class MapView extends Component {
         // console.log(JSON.stringify(this.state.userMarkers))
     }
 
+    //#region markerEditorEvents
+    onMarkerNameChange = (e) => {
+        let marker = this.state.activeMarker
+        marker.name = e.currentTarget.value
+        this.setState({
+            activeMarker: marker
+        })
+    }
+
+    onMarkerDescriptionChange = (e) => {
+        let marker = this.state.activeMarker
+        marker.description = e.currentTarget.value
+        this.setState({
+            activeMarker: marker
+        })
+    }
+
+    onMarkerFillColorChange = (e) => {
+        let marker = this.state.activeMarker
+        marker.iconSVG.fillColor = e.currentTarget.value
+        this.setState({
+            activeMarker: marker
+        })
+    }
+
+    onMarkerFillOpacityChange = (e) => {
+        let marker = this.state.activeMarker
+        marker.iconSVG.fillOpacity = e.currentTarget.value
+        
+        let newUserMarkers = this.state.userMarkers
+        this.setState({
+            userMarkers: newUserMarkers,
+            activeMarker: newUserMarkers[marker.index]
+        })
+    }
+
+    onMarkerStrokeColorChange = (e) => {
+        let marker = this.state.activeMarker
+        marker.iconSVG.strokeColor = e.currentTarget.value
+        this.setState({
+            activeMarker: marker
+        })
+    }
+
+    onMarkerStrokeWeightChange = (e) => {
+        let marker = this.state.activeMarker
+        marker.iconSVG.strokeWeight = e.currentTarget.value
+        this.setState({
+            activeMarker: marker
+        })
+    }
+    //#endregion
+
     render() {
         let markerRender = this.state.userMarkers.map((marker, index) => {
             return <Marker
                 key={index}
-                name={index}
+                index={index}
+                name={marker.name}
                 position={marker.position}
                 icon={marker.iconSVG}
                 animation={window.google.maps.Animation.DROP}
                 onClick={this.onMarkerClick}
             />
         })
+
+        console.log(markerRender)
 
         return (
             <div>
@@ -138,7 +195,15 @@ class MapView extends Component {
                 <HelpWindow visible={this.state.helpWindowVisible} />
 
                 <Sidebar visible={this.state.markerEditorVisible} side="left" size={"300px"}>
-                    <MarkerEditor activeMarker={this.state.activeMarker} visible={this.state.markerEditorVisible} />
+                    <MarkerEditor
+                        activeMarker={this.state.activeMarker}
+                        onNameChange={this.onMarkerNameChange}
+                        onDescriptionChange={this.onMarkerDescriptionChange}
+                        onFillColorChange={this.onMarkerFillColorChange}
+                        onFillOpacityChange={this.onMarkerFillOpacityChange}
+                        onStrokeColorChange={this.onMarkerStrokeColorChange}
+                        onStrokeWeightChange={this.onMarkerStrokeWeightChange}
+                    />
                 </Sidebar>
                 
                 <Sidebar visible={this.state.mapToolbarVisible} side="right">

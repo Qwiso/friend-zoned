@@ -2,33 +2,27 @@ import React, { Component } from 'react'
 
 export class MarkerEditor extends Component {
 
-    // TODO figure out why this 
-    // shouldComponentUpdate() {
-    //     if (this.props.marker) return true
-    //     return false
-    // }
-
-    onFillColorChange = () => {}
-    onFillOpacityChange = () => {}
-    onStrokeColorChange = () => {}
-    onStrokeWeightChange = () => {}
+    onNameChange = this.props.onNameChange
+    onDescriptionChange = this.props.onDescriptionChange
+    onFillColorChange = this.props.onFillColorChange
+    onFillOpacityChange = this.props.onFillOpacityChange
+    onStrokeColorChange = this.props.onStrokeColorChange
+    onStrokeWeightChange = this.props.onStrokeWeightChange
 
     render() {
-        console.log(this.state)
-        return <div></div>
-
+        if (!this.props.activeMarker) return <div></div>
+        let marker = this.props.activeMarker
         return (
             <div className="row">
                 <div className="col m-2">
-                    <h3>{this.state.name}</h3>
-                    <p>{this.state.description}</p>
-                    <input type="color" />
+                    <h3>{marker.name}</h3>
+                    <p>{marker.description}</p>
 
-                    <input className="form-control" type="color" name="fillColor" value={this.state.icon.fillColor} onChange={this.onFillColorChange} />
-                    <input className="form-control" type="range" name="fillOpacity" value={this.state.icon.fillOpacity} min="0" max="1" step="0.01" onChange={this.onFillOpacityChange} />
+                    <input className="form-control" type="color" name="fillColor" value={marker.iconSVG.fillColor} onChange={(e) => this.onFillColorChange(e)} />
+                    <input className="form-control" type="range" name="fillOpacity" value={marker.iconSVG.fillOpacity} min="0" max="1" step="0.01" onChange={(e) => this.onFillOpacityChange(e)} />
 
-                    <input className="form-control" type="color" name="strokeColor" value={this.state.icon.strokeColor} onChange={this.onStrokeColorChange} />
-                    <input className="form-control" type="range" name="strokeWeight" value={this.state.icon.strokeWeight} min="0" max="5" step="1" onChange={this.onStrokeWeightChange} />
+                    <input className="form-control" type="color" name="strokeColor" value={marker.iconSVG.strokeColor} onChange={(e) => this.onStrokeColorChange(e)} />
+                    <input className="form-control" type="range" name="strokeWeight" value={marker.iconSVG.strokeWeight} min="0" max="5" step="1" onChange={(e) => this.onStrokeWeightChange(e)} />
                 </div>
             </div>
         )
