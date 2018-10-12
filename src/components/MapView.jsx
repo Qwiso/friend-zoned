@@ -1,3 +1,4 @@
+//#region imports
 import React, { Component } from 'react'
 import { Map, Marker, GoogleApiWrapper } from 'google-maps-react'
 import { getMarkerSVGByName } from './MarkerIcons'
@@ -8,6 +9,7 @@ import { HelpWindow } from './HelpWindow'
 import { MapToolbar } from './MapToolbar'
 import { Sidebar } from './Sidebar'
 import { QMarker } from '../models/QMarker'
+//#endregion
 
 class MapView extends Component {
     state = {
@@ -21,12 +23,17 @@ class MapView extends Component {
         placeMarker: false
     }
 
-    //#region
+    shouldComponentUpdate() {
+        return true
+    }
+
+    //#region toggle events
     toggleMapToolbar = () => {
         this.setState({
             mapToolbarVisible: !this.state.mapToolbarVisible
         })
     }
+
 
     toggleHelpWindow = () => {
         this.setState({
@@ -34,9 +41,11 @@ class MapView extends Component {
         })
     }
 
+
     actionButtonMouseEnter = (a) => {
         a.currentTarget.classList.add("bg-info")
     }
+
 
     actionButtonMouseLeave = (a) => {
         a.currentTarget.classList.remove("bg-info")
@@ -45,7 +54,8 @@ class MapView extends Component {
 
     onMarkerClick = (a, b, e) => {
         this.setState({
-            activeMarker: a
+            activeMarker: a,
+            markerEditorVisible: true
         })
     }
 
@@ -67,17 +77,24 @@ class MapView extends Component {
             })
         } else {
             this.setState({
-                activeMarker: null
+                activeMarker: null,
+                markerEditorVisible: false
             })
         }
     }
 
     toolbarIconClicked = (e) => {
         this.setState({
+            markerEditorVisible: false,
+            activeMarker: null,
             placeMarker: true,
             currentMarkerIconName: e.currentTarget.dataset.iconName,
             currentMarkerSVG: getMarkerSVGByName(e.currentTarget.dataset.iconName),
         })
+    }
+
+    saveMap = () => {
+        // console.log(JSON.stringify(this.state.userMarkers))
     }
 
     render() {
@@ -95,7 +112,7 @@ class MapView extends Component {
         return (
             <div>
                 <Map
-                    style={{marginBottom: 46}}
+                    style={{transition: "0.5s", marginBottom: 46, marginRight: this.state.mapToolbarVisible ? 150 : 0}}
                     styles={this.state.mapStyle}
                     onClick={this.onMapClicked}
                     google={this.props.google}
@@ -121,11 +138,11 @@ class MapView extends Component {
                 <HelpWindow visible={this.state.helpWindowVisible} />
 
                 <Sidebar visible={this.state.markerEditorVisible} side="left" size={"300px"}>
-                    <MarkerEditor marker={this.state.selectedMarker} />
+                    <MarkerEditor activeMarker={this.state.activeMarker} visible={this.state.markerEditorVisible} />
                 </Sidebar>
                 
                 <Sidebar visible={this.state.mapToolbarVisible} side="right">
-                    <MapToolbar onIconClick={this.toolbarIconClicked} placeMarker={this.state.placeMarker} />
+                    <MapToolbar onIconClick={this.toolbarIconClicked} onMapSave={this.saveMap} placeMarker={this.state.placeMarker} />
                 </Sidebar>
             </div>
         )

@@ -6,10 +6,12 @@ export class MapToolbar extends Component {
         selectedIcon: null
     }
 
+
     shouldComponentUpdate() {
         if (this.props.placeMarker) return true
         return false
     }
+
 
     componentDidUpdate() {
         if (!this.props.placeMarker) {
@@ -28,6 +30,7 @@ export class MapToolbar extends Component {
         })
     }
 
+
     makeIcons(iconNames) {
         let stack = []
 
@@ -38,6 +41,7 @@ export class MapToolbar extends Component {
 
         return stack
     }
+
 
     markerIconClicked = (e) => {
         this.setState({
@@ -55,16 +59,16 @@ export class MapToolbar extends Component {
         e.currentTarget.classList.remove('text-white')
         e.currentTarget.classList.add('text-info')
     }
+    
 
     render() {
-        console.log('toolbar render')
         return (
             <div>
                 <p className="pt-2 mb-0 text-center">Marker</p>
                 <div id="markerIcons" className="d-flex flex-wrap text-center">
                     {this.state.availableIcons}
                 </div>
-                <div className="mt-3 btn btn-info btn-block">Save Map</div>
+                <div className="mt-3 btn btn-info btn-block" onClick={this.props.onMapSave}>Save Map</div>
             </div>
         )
     }

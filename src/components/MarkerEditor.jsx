@@ -2,20 +2,10 @@ import React, { Component } from 'react'
 
 export class MarkerEditor extends Component {
 
-    state = { }
-
-    // componentDidMount() {
-    //     this.setState({
-    //         editable: false,
-    //         name: this.props.marker.name,
-    //         description: this.props.marker.description,
-    //         icon: {
-    //             fillColor: this.props.marker.icon.fillColor,
-    //             fillOpacity: this.props.marker.icon.fillOpacity,
-    //             strokeColor: this.props.marker.icon.strokeColor,
-    //             strokeWeight: this.props.marker.icon.strokeWeight
-    //         }
-    //     })
+    // TODO figure out why this 
+    // shouldComponentUpdate() {
+    //     if (this.props.marker) return true
+    //     return false
     // }
 
     onFillColorChange = () => {}
@@ -24,6 +14,7 @@ export class MarkerEditor extends Component {
     onStrokeWeightChange = () => {}
 
     render() {
+        console.log(this.state)
         return <div></div>
 
         return (
