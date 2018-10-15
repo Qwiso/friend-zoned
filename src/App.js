@@ -26,18 +26,14 @@ const renderMergedProps = (component, ...rest) => {
   )
 }
 
-
 class App extends Component {
-  state = {
-  }
-
   render() {
     return (
       <BrowserRouter>
           <section name="content">
             <div className="container-fluid p-0">
               <Switch>
-                <AuthRoute exact path="/" component={MapView} />
+                <AuthRoute exact path="/" component={MapView} myMarkers={[]} otherMarkers={[]} />
                 <AuthRoute exact path="/profile" component={User} />
                 <AuthRoute exact path="/profile/:id" component={User} />
               </Switch>
