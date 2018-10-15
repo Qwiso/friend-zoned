@@ -34,8 +34,6 @@ class MapView extends Component {
             }
             axios.get(url).then(res => {
                 if (res.data.otherMarkers.length > 0) {
-                    // console.log(res.data.otherMarkers)
-                    // console.log('other markers available')
                     let otherMarkers = []
                     res.data.otherMarkers.forEach(data => {
                         let markers = JSON.parse(data.markers)
@@ -47,7 +45,6 @@ class MapView extends Component {
                         otherMarkers: otherMarkers
                     })
                 }
-                console.log(res.data)
                 this.setState({
                     userMarkers: JSON.parse(res.data.userMarkers.markers) || []
                 })
