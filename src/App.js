@@ -4,7 +4,6 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import '@fortawesome/fontawesome-free/css/all.min.css'
 
 import MapView from "./components/MapView"
-import { User } from "./components/User"
 
 const checkAuth = () => {
   return true
@@ -33,9 +32,9 @@ class App extends Component {
           <section name="content">
             <div className="container-fluid p-0">
               <Switch>
-                <AuthRoute exact path="/" component={MapView} myMarkers={[]} otherMarkers={[]} />
-                <AuthRoute exact path="/profile" component={User} />
-                <AuthRoute exact path="/profile/:id" component={User} />
+                <AuthRoute exact path="/" component={MapView} />
+                <AuthRoute exact path="/:id" component={MapView} />
+                <AuthRoute exact path="/:id/with/:others" component={MapView} />
               </Switch>
             </div>
           </section>

@@ -1,6 +1,8 @@
 //#region imports
 import React, { Component } from 'react'
-import { Map, Marker, GoogleApiWrapper } from 'google-maps-react'
+import { Map, Marker, GoogleApiWrapper, InfoWindow } from 'google-maps-react'
+import axios from 'axios'
+import querystring from 'querystring'
 import { getMarkerSVGByName } from './MarkerIcons'
 import { testing } from '../MapStyles'
 
@@ -19,8 +21,38 @@ class MapView extends Component {
         currentMarkerIconName: 'map-pin',
         currentMarkerSVG: getMarkerSVGByName('map-pin'),
         userMarkers: [],
+        otherMarkers: [],
         activeMarker: null,
         placeMarker: false
+    }
+
+    componentWillMount() {
+        if (this.props.match.params.id) {
+            let url = 'http://localhost:3001/' + this.props.match.params.id
+            if (this.props.match.params.others) {
+                url += '/with/' + this.props.match.params.others
+            }
+            axios.get(url).then(res => {
+                if (res.data.otherMarkers.length > 0) {
+                    // console.log(res.data.otherMarkers)
+                    // console.log('other markers available')
+                    let otherMarkers = []
+                    res.data.otherMarkers.forEach(data => {
+                        let markers = JSON.parse(data.markers)
+                        markers.forEach(marker => {
+                            otherMarkers.push(marker)
+                        })
+                    })
+                    this.setState({
+                        otherMarkers: otherMarkers
+                    })
+                }
+                console.log(res.data)
+                this.setState({
+                    userMarkers: JSON.parse(res.data.userMarkers.markers) || []
+                })
+            })
+        }
     }
 
     //#region toggle events
@@ -53,6 +85,13 @@ class MapView extends Component {
             activeMarker: this.state.userMarkers[a.index],
             markerEditorVisible: true
         })
+    }
+
+    onOtherMarkerClick = (a, b, e) => {
+        let iw = new InfoWindow({
+
+        })
+        console.log(iw)
     }
 
     onMapClicked = (a, b, e) => {
@@ -91,8 +130,10 @@ class MapView extends Component {
     }
 
     saveMap = () => {
-        console.log( Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15) )
-        console.log( JSON.stringify(this.state.userMarkers) )
+        let data = JSON.stringify(this.state.userMarkers)
+        axios.post('http://localhost:3001', querystring.stringify({markers: data})).then((res) => {
+            window.location.href = "http://localhost:3000/" + res.data
+        })
     }
 
     // TODO get this logic working from within the MarkerEditor component
@@ -153,8 +194,7 @@ class MapView extends Component {
     //#endregion
     
     render() {
-        console.log(this.props)
-        let markerRender = this.state.userMarkers.map((marker, index) => {
+        let userMarkers = this.state.userMarkers.map((marker, index) => {
             let thing = <Marker
                 key={index}
                 index={index}
@@ -165,6 +205,19 @@ class MapView extends Component {
                 onClick={this.onMarkerClick}
                 draggable={true}
                 shouldRender={marker.shouldRender}
+            />
+            marker.shouldRender = false
+            return thing
+        })
+
+        let otherMarkers = this.state.otherMarkers.map((marker, index) => {
+            let thing = <Marker
+                key={index}
+                index={index}
+                name={marker.name}
+                position={marker.position}
+                icon={marker.iconSVG}
+                onClick={this.onOtherMarkerClick}
             />
             marker.shouldRender = false
             return thing
@@ -183,7 +236,8 @@ class MapView extends Component {
                         lng: -84.35267661111448
                     }}>
 
-                    {markerRender}
+                    {userMarkers}
+                    {otherMarkers}
                 </Map>
 
                 <section name="actionBar" className="d-block">
