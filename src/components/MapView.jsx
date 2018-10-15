@@ -60,7 +60,7 @@ class MapView extends Component {
             let newMarker = new QMarker({
                 index: this.state.userMarkers.length,
                 name: "new marker",
-                description: "",
+                description: "description",
                 position: {
                     lat: e.latLng.lat(),
                     lng: e.latLng.lng()
@@ -91,7 +91,8 @@ class MapView extends Component {
     }
 
     saveMap = () => {
-        console.log(JSON.stringify(this.state.userMarkers))
+        console.log( Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15) )
+        console.log( JSON.stringify(this.state.userMarkers) )
     }
 
     // TODO get this logic working from within the MarkerEditor component
@@ -99,7 +100,6 @@ class MapView extends Component {
     onMarkerNameChange = (e) => {
         let marker = this.state.activeMarker
         marker.name = e.currentTarget.value
-        marker.shouldRender = true
         this.setState({
             activeMarker: marker
         })
@@ -108,7 +108,6 @@ class MapView extends Component {
     onMarkerDescriptionChange = (e) => {
         let marker = this.state.activeMarker
         marker.description = e.currentTarget.value
-        marker.shouldRender = true
         this.setState({
             activeMarker: marker
         })
@@ -154,6 +153,7 @@ class MapView extends Component {
     //#endregion
     
     render() {
+        console.log(this.props)
         let markerRender = this.state.userMarkers.map((marker, index) => {
             let thing = <Marker
                 key={index}
@@ -161,7 +161,7 @@ class MapView extends Component {
                 name={marker.name}
                 position={marker.position}
                 icon={marker.iconSVG}
-                // animation={window.google.maps.Animation.DROP}
+                animation={marker.shouldRender ? null : window.google.maps.Animation.DROP}
                 onClick={this.onMarkerClick}
                 draggable={true}
                 shouldRender={marker.shouldRender}
