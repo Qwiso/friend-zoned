@@ -1,17 +1,14 @@
 import React, { Component } from 'react'
 
 export class MapToolbar extends Component {
-
     state = {
         selectedIcon: null
     }
-
 
     shouldComponentUpdate() {
         if (this.props.placeMarker) return true
         return false
     }
-
 
     componentDidUpdate() {
         if (!this.props.placeMarker) {
@@ -30,7 +27,6 @@ export class MapToolbar extends Component {
         })
     }
 
-
     makeIcons(iconNames) {
         let stack = []
 
@@ -41,7 +37,6 @@ export class MapToolbar extends Component {
 
         return stack
     }
-
 
     markerIconClicked = (e) => {
         this.setState({
@@ -60,7 +55,6 @@ export class MapToolbar extends Component {
         e.currentTarget.classList.add('text-info')
     }
     
-
     render() {
         return (
             <div>

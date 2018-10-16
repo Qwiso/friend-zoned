@@ -1,6 +1,6 @@
 //#region imports
 import React, { Component } from 'react'
-import { Map, Marker, GoogleApiWrapper, InfoWindow } from 'google-maps-react'
+import { Map, Marker, GoogleApiWrapper } from 'google-maps-react'
 import axios from 'axios'
 import querystring from 'querystring'
 import { getMarkerSVGByName } from './MarkerIcons'
@@ -16,6 +16,7 @@ import { QMarker } from '../models/QMarker'
 class MapView extends Component {
     state = {
         mapStyle: testing,
+        leftSidebarVisible: true,
         markerEditorVisible: false,
         mapToolbarVisible: true,
         currentMarkerIconName: 'map-pin',
@@ -27,6 +28,7 @@ class MapView extends Component {
     }
 
     componentWillMount() {
+        console.log (this.props.google.maps.StreetViewPanorama)
         if (this.props.match.params.id) {
             let url = 'http://localhost:3001/' + this.props.match.params.id
             if (this.props.match.params.others) {
@@ -46,19 +48,23 @@ class MapView extends Component {
                     })
                 }
                 this.setState({
-                    userMarkers: JSON.parse(res.data.userMarkers.markers) || []
+                    userMarkers: res.data.userMarkers ? JSON.parse(res.data.userMarkers.markers) : []
                 })
             })
         }
     }
 
     //#region toggle events
+    toggleLeftSidebar = () => {
+        this.setState({
+            leftSidebarVisible: !this.state.leftSidebarVisible
+        })
+    }
     toggleMapToolbar = () => {
         this.setState({
             mapToolbarVisible: !this.state.mapToolbarVisible
         })
     }
-
 
     toggleHelpWindow = () => {
         this.setState({
@@ -66,17 +72,16 @@ class MapView extends Component {
         })
     }
 
-
     actionButtonMouseEnter = (a) => {
         a.currentTarget.classList.add("bg-info")
     }
-
 
     actionButtonMouseLeave = (a) => {
         a.currentTarget.classList.remove("bg-info")
     }
     //#endregion
 
+    //#region marker(icon) events
     onMarkerClick = (a, b, e) => {
         this.setState({
             activeMarker: this.state.userMarkers[a.index],
@@ -85,11 +90,31 @@ class MapView extends Component {
     }
 
     onOtherMarkerClick = (a, b, e) => {
-        let iw = new InfoWindow({
-
-        })
-        console.log(iw)
+        // render an infowindow?
     }
+
+    globalMarkerClicked = (a) => {
+        this.setState({
+            panToPos: this.state.userMarkers[a.currentTarget.dataset.index].position
+        })
+    }
+
+    globalOtherMarkerClicked = (a) => {
+        this.setState({
+            panToPos: this.state.otherMarkers[a.currentTarget.dataset.index].position
+        })
+    }
+
+    toolbarIconClicked = (e) => {
+        this.setState({
+            markerEditorVisible: false,
+            activeMarker: null,
+            placeMarker: true,
+            currentMarkerIconName: e.currentTarget.dataset.iconName,
+            currentMarkerSVG: getMarkerSVGByName(e.currentTarget.dataset.iconName),
+        })
+    }
+    //#endregion
 
     onMapClicked = (a, b, e) => {
         if (this.state.placeMarker) {
@@ -114,16 +139,6 @@ class MapView extends Component {
                 markerEditorVisible: false
             })
         }
-    }
-
-    toolbarIconClicked = (e) => {
-        this.setState({
-            markerEditorVisible: false,
-            activeMarker: null,
-            placeMarker: true,
-            currentMarkerIconName: e.currentTarget.dataset.iconName,
-            currentMarkerSVG: getMarkerSVGByName(e.currentTarget.dataset.iconName),
-        })
     }
 
     saveMap = () => {
@@ -191,6 +206,7 @@ class MapView extends Component {
     //#endregion
     
     render() {
+        console.log('render')
         let userMarkers = this.state.userMarkers.map((marker, index) => {
             let thing = <Marker
                 key={index}
@@ -223,11 +239,12 @@ class MapView extends Component {
         return (
             <div>
                 <Map
-                    style={{transition: "0.5s", marginBottom: 46, marginRight: this.state.mapToolbarVisible ? 150 : 0}}
+                    style={{transition: "0.5s", marginBottom: 46, marginLeft: this.state.leftSidebarVisible ? 300 : 0, marginRight: this.state.mapToolbarVisible ? 150 : 0}}
                     styles={this.state.mapStyle}
                     onClick={this.onMapClicked}
                     google={this.props.google}
                     zoom={10}
+                    center={this.state.panToPos ? this.state.panToPos : null}
                     initialCenter={{
                         lat: 33.83008972168741,
                         lng: -84.35267661111448
@@ -235,12 +252,13 @@ class MapView extends Component {
 
                     {userMarkers}
                     {otherMarkers}
+                    {this.iw}
                 </Map>
 
                 <section name="actionBar" className="d-block">
                     <div className="container-fluid p-0 fixed-bottom bg-dark" style={{height: "46px"}}>
                         <div className="d-flex justify-content-around text-center">
-                            {/* <div style={{cursor: "pointer"}} onClick={this.toggleLeftSidebar} onMouseEnter={this.actionButtonMouseEnter} onMouseLeave={this.actionButtonMouseLeave} className="col"><i className="fas fa-lg fa-list p-3 text-white"></i></div> */}
+                            <div style={{cursor: "pointer"}} onClick={this.toggleLeftSidebar} onMouseEnter={this.actionButtonMouseEnter} onMouseLeave={this.actionButtonMouseLeave} className="col"><i className="fas fa-lg fa-list p-3 text-white"></i></div>
                             <div style={{cursor: "pointer"}} onClick={this.toggleHelpWindow} onMouseEnter={this.actionButtonMouseEnter} onMouseLeave={this.actionButtonMouseLeave} className="col"><i className="fas fa-lg fa-question p-3 text-white"></i></div>
                             <div style={{cursor: "pointer"}} onClick={this.toggleMapToolbar} onMouseEnter={this.actionButtonMouseEnter} onMouseLeave={this.actionButtonMouseLeave} className="col"><i className="fas fa-lg fa-list fa-flip-horizontal p-3 text-white"></i></div>
                         </div>
@@ -249,7 +267,23 @@ class MapView extends Component {
 
                 <HelpWindow visible={this.state.helpWindowVisible} />
 
-                <Sidebar visible={this.state.markerEditorVisible} side="left" size={"300px"}>
+                <Sidebar visible={this.state.leftSidebarVisible} side="left" size={"300px"}>
+                    <div className="row">
+                        <div className="col">
+                            <h4>Main Markers</h4>
+                            {this.state.userMarkers.map((a, b) =>{
+                                return <i onClick={this.globalMarkerClicked} key={a.index} data-index={a.index} className={"fa fa-fw fa-2x fa-" + a.iconName}></i>
+                            })}
+                            <hr></hr>
+                            <h4>Other Markers</h4>
+                            {this.state.otherMarkers.map((a, b) =>{
+                                return <i onClick={this.globalOtherMarkerClicked} key={a.index} data-index={a.index} className={"fa fa-fw fa-2x fa-" + a.iconName}></i>
+                            })}
+                        </div>
+                    </div>
+                </Sidebar>
+
+                <Sidebar className="p-4" visible={this.state.markerEditorVisible} side="left" size={"300px"}>
                     <MarkerEditor
                         activeMarker={this.state.activeMarker}
                         onNameChange={this.onMarkerNameChange}
