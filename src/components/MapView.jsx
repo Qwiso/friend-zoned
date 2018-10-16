@@ -50,7 +50,7 @@ class MapView extends Component {
                 }
 
                 let userMarkers = res.data.userMarkers ? JSON.parse(res.data.userMarkers.markers) : []
-                userMarkers.map((marker) => {
+                userMarkers.forEach((marker) => {
                     let iconSVG = getMarkerSVGByName(marker.iconName)
                     marker.iconSVG.path = iconSVG.path
                 })
@@ -213,7 +213,6 @@ class MapView extends Component {
     //#endregion
     
     render() {
-        console.log('render')
         let userMarkers = this.state.userMarkers.map((marker, index) => {
             let thing = <Marker
                 key={index}
@@ -311,6 +310,6 @@ class MapView extends Component {
 }
 
 export default GoogleApiWrapper({
-    apiKey: 'AIzaSyCYHkj8sSYIxtHm_guGKtkxqJTRTPF4luE',
+    apiKey: 'AIzaSyAiFYDL5cioSrqAZUKhGkZn2aezojpBOSs',
     LoadingContainer: () => <div></div>
 })(MapView)
