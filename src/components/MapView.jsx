@@ -39,6 +39,8 @@ class MapView extends Component {
                     res.data.otherMarkers.forEach(data => {
                         let markers = JSON.parse(data.markers)
                         markers.forEach(marker => {
+                            let iconSVG = getMarkerSVGByName(marker.iconName)
+                            marker.iconSVG.path = iconSVG.path
                             otherMarkers.push(marker)
                         })
                     })
@@ -46,8 +48,14 @@ class MapView extends Component {
                         otherMarkers: otherMarkers
                     })
                 }
+
+                let userMarkers = res.data.userMarkers ? JSON.parse(res.data.userMarkers.markers) : []
+                userMarkers.map((marker) => {
+                    let iconSVG = getMarkerSVGByName(marker.iconName)
+                    marker.iconSVG.path = iconSVG.path
+                })
                 this.setState({
-                    userMarkers: res.data.userMarkers ? JSON.parse(res.data.userMarkers.markers) : []
+                    userMarkers: userMarkers
                 })
             })
         }
