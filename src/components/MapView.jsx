@@ -28,7 +28,6 @@ class MapView extends Component {
     }
 
     componentWillMount() {
-        console.log (this.props.google.maps.StreetViewPanorama)
         if (this.props.match.params.id) {
             let url = 'http://localhost:3001/' + this.props.match.params.id
             if (this.props.match.params.others) {
