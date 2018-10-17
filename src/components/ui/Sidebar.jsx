@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import '../css/sidebar.css'
+import '../../css/sidebar.css'
 
 export class Sidebar extends Component {
     state = {

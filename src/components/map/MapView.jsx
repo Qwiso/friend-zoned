@@ -4,13 +4,13 @@ import { Map, Marker, GoogleApiWrapper } from 'google-maps-react'
 import axios from 'axios'
 import querystring from 'querystring'
 import { getMarkerSVGByName } from './MarkerIcons'
-import { testing } from '../MapStyles'
+import { testing } from '../../MapStyles'
 
 import { MarkerEditor } from './MarkerEditor'
-import { HelpWindow } from './HelpWindow'
+import { HelpWindow } from '../ui/HelpWindow'
 import { MapToolbar } from './MapToolbar'
-import { Sidebar } from './Sidebar'
-import { QMarker } from '../models/QMarker'
+import { Sidebar } from '../ui/Sidebar'
+import { QMarker } from '../../models/QMarker'
 //#endregion
 
 class MapView extends Component {
@@ -309,6 +309,6 @@ class MapView extends Component {
 }
 
 export default GoogleApiWrapper({
-    apiKey: 'AIzaSyAiFYDL5cioSrqAZUKhGkZn2aezojpBOSs',
+    apiKey: 'AIzaSyByNfi0l8T35n_MQeXCdWPxrcG4f6vjPpI',
     LoadingContainer: () => <div></div>
 })(MapView)

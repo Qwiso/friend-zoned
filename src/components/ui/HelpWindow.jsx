@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import '../css/helpwindow.css'
+import '../../css/helpwindow.css'
 
 export class HelpWindow extends Component {
     state = {
