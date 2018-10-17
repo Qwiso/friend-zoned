@@ -258,7 +258,6 @@ class MapView extends Component {
 
                     {userMarkers}
                     {otherMarkers}
-                    {this.iw}
                 </Map>
 
                 <section name="actionBar" className="d-block">
