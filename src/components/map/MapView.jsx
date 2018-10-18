@@ -1,8 +1,6 @@
 //#region imports
 import React, { Component } from 'react'
 import { Map, Marker, GoogleApiWrapper } from 'google-maps-react'
-import axios from 'axios'
-import querystring from 'querystring'
 import { getMarkerSVGByName } from './MarkerIcons'
 import { testing } from '../../MapStyles'
 
@@ -27,39 +25,39 @@ class MapView extends Component {
         placeMarker: false
     }
 
-    componentWillMount() {
-        if (this.props.match.params.id) {
-            let url = 'http://localhost:3001/' + this.props.match.params.id
-            if (this.props.match.params.others) {
-                url += '/with/' + this.props.match.params.others
-            }
-            axios.get(url).then(res => {
-                if (res.data.otherMarkers.length > 0) {
-                    let otherMarkers = []
-                    res.data.otherMarkers.forEach(data => {
-                        let markers = JSON.parse(data.markers)
-                        markers.forEach(marker => {
-                            let iconSVG = getMarkerSVGByName(marker.iconName)
-                            marker.iconSVG.path = iconSVG.path
-                            otherMarkers.push(marker)
-                        })
-                    })
-                    this.setState({
-                        otherMarkers: otherMarkers
-                    })
-                }
+    // componentDidMount() {
+    //     if (this.props.match.params.id) {
+    //         let url = 'http://localhost:3001/' + this.props.match.params.id
+    //         if (this.props.match.params.others) {
+    //             url += '/with/' + this.props.match.params.others
+    //         }
+    //         axios.get(url).then(res => {
+    //             if (res.data.otherMarkers.length > 0) {
+    //                 let otherMarkers = []
+    //                 res.data.otherMarkers.forEach(data => {
+    //                     let markers = JSON.parse(data.markers)
+    //                     markers.forEach(marker => {
+    //                         let iconSVG = getMarkerSVGByName(marker.iconName)
+    //                         marker.iconSVG.path = iconSVG.path
+    //                         otherMarkers.push(marker)
+    //                     })
+    //                 })
+    //                 this.setState({
+    //                     otherMarkers: otherMarkers
+    //                 })
+    //             }
 
-                let userMarkers = res.data.userMarkers ? JSON.parse(res.data.userMarkers.markers) : []
-                userMarkers.forEach((marker) => {
-                    let iconSVG = getMarkerSVGByName(marker.iconName)
-                    marker.iconSVG.path = iconSVG.path
-                })
-                this.setState({
-                    userMarkers: userMarkers
-                })
-            })
-        }
-    }
+    //             let userMarkers = res.data.userMarkers ? JSON.parse(res.data.userMarkers.markers) : []
+    //             userMarkers.forEach((marker) => {
+    //                 let iconSVG = getMarkerSVGByName(marker.iconName)
+    //                 marker.iconSVG.path = iconSVG.path
+    //             })
+    //             this.setState({
+    //                 userMarkers: userMarkers
+    //             })
+    //         })
+    //     }
+    // }
 
     //#region toggle events
     toggleLeftSidebar = () => {
@@ -149,10 +147,10 @@ class MapView extends Component {
     }
 
     saveMap = () => {
-        let data = JSON.stringify(this.state.userMarkers)
-        axios.post('http://localhost:3001', querystring.stringify({markers: data})).then((res) => {
-            window.location.href = "http://localhost:3000/" + res.data
-        })
+        // let data = JSON.stringify(this.state.userMarkers)
+        // axios.post('http://localhost:3001', querystring.stringify({markers: data})).then((res) => {
+        //     window.location.href = "http://localhost:3000/" + res.data
+        // })
     }
 
     // TODO get this logic working from within the MarkerEditor component
@@ -309,6 +307,6 @@ class MapView extends Component {
 }
 
 export default GoogleApiWrapper({
-    apiKey: 'AIzaSyByNfi0l8T35n_MQeXCdWPxrcG4f6vjPpI',
+    apiKey: 'AIzaSyCwS80CMHsyEiDxcPmfXkDyPwulq9ltuxE',
     LoadingContainer: () => <div></div>
 })(MapView)
