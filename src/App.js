@@ -18,7 +18,7 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig)
 
 const checkAuth = () => {
-  if (!this.state.user) return false
+  // if (!this.state.user) return false
   return true
 }
 
