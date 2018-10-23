@@ -275,7 +275,7 @@ class MapView extends Component {
                         <div className="col">
                             <h4>Main Markers</h4>
                             {this.state.userMarkers.map((a, b) =>{
-                                return <i onClick={this.globalMarkerClicked} key={a.index} data-index={a.index} className={"fa fa-fw fa-2x fa-" + a.iconName}></i>
+                                return <i style={{cursor: "pointer"}} onClick={this.globalMarkerClicked} key={a.index} data-index={a.index} className={"fa fa-fw fa-2x fa-" + a.iconName}></i>
                             })}
                             <hr></hr>
                             <h4>Other Markers</h4>

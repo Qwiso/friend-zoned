@@ -17,25 +17,25 @@ const firebaseConfig = {
 }
 firebase.initializeApp(firebaseConfig)
 
-const checkAuth = () => {
-  // if (!this.state.user) return false
-  return true
-}
+// const checkAuth = () => {
+//   if (!this.state.user) return false
+//   return true
+// }
 
-const AuthRoute = ({ component, ...rest }) => (
-  <Route {...rest} render={props => (
-    checkAuth()
-    ? renderMergedProps(component, props, rest)
-    : <Login />
-  )} />
-)
+// const AuthRoute = ({ component, ...rest }) => (
+//   <Route {...rest} render={props => (
+//     checkAuth()
+//     ? renderMergedProps(component, props, rest)
+//     : <Login />
+//   )} />
+// )
 
-const renderMergedProps = (component, ...rest) => {
-  const finalProps = Object.assign({}, ...rest)
-  return (
-    React.createElement(component, finalProps)
-  )
-}
+// const renderMergedProps = (component, ...rest) => {
+//   const finalProps = Object.assign({}, ...rest)
+//   return (
+//     React.createElement(component, finalProps)
+//   )
+// }
 
 class App extends Component {
   componentDidMount() {
@@ -52,11 +52,9 @@ class App extends Component {
           <section name="content">
             <div className="container-fluid p-0">
               <Switch>
-                <AuthRoute exact path="/" component={MapView} />
-                <AuthRoute exact path="/map/:id" component={MapView} />
-                <AuthRoute exact path="/:id/with/:others" component={MapView} />
-                <Route exact path="/login" component={Login} />
-                <Redirect to="/login" />
+                <Route exact path="/" component={MapView} />
+                <Route exact path="/map/:id" component={MapView} />
+                <Route exact path="/:id/with/:others" component={MapView} />
               </Switch>
             </div>
           </section>
