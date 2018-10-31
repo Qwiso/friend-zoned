@@ -8,7 +8,6 @@ import { MarkerEditor } from './MarkerEditor'
 import { HelpWindow } from '../ui/HelpWindow'
 import { MapToolbar } from './MapToolbar'
 import { Sidebar } from '../ui/Sidebar'
-import { QMarker } from '../../models/QMarker'
 //#endregion
 
 class MapView extends Component {
@@ -123,7 +122,7 @@ class MapView extends Component {
 
     onMapClicked = (a, b, e) => {
         if (this.state.placeMarker) {
-            let newMarker = new QMarker({
+            let newMarker = {
                 index: this.state.userMarkers.length,
                 name: "new marker",
                 description: "description",
@@ -133,7 +132,7 @@ class MapView extends Component {
                 },
                 iconName: this.state.currentMarkerIconName,
                 iconSVG: this.state.currentMarkerSVG
-            })
+            }
             this.setState({
                 placeMarker: false,
                 userMarkers: [...this.state.userMarkers, newMarker]
