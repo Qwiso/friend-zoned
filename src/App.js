@@ -17,26 +17,6 @@ const firebaseConfig = {
 }
 firebase.initializeApp(firebaseConfig)
 
-// const checkAuth = () => {
-//   if (!this.state.user) return false
-//   return true
-// }
-
-// const AuthRoute = ({ component, ...rest }) => (
-//   <Route {...rest} render={props => (
-//     checkAuth()
-//     ? renderMergedProps(component, props, rest)
-//     : <Login />
-//   )} />
-// )
-
-// const renderMergedProps = (component, ...rest) => {
-//   const finalProps = Object.assign({}, ...rest)
-//   return (
-//     React.createElement(component, finalProps)
-//   )
-// }
-
 class App extends Component {
   componentDidMount() {
     firebase.auth().onAuthStateChanged((user) => {
