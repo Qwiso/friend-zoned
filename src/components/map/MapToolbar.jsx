@@ -62,7 +62,7 @@ export class MapToolbar extends Component {
                 <div id="markerIcons" className="d-flex flex-wrap text-center">
                     {this.state.availableIcons}
                 </div>
-                <div className="mt-3 btn btn-info btn-block" onClick={this.props.onMapSave}>Save Map</div>
+                {this.props.user.isAnonymous ? <div className="mt-3 btn btn-info btn-block" onClick={() => {window.location.href = '/logout'}}>Log In</div> : <div className="mt-3 btn btn-info btn-block" onClick={this.props.onMapSave}>Save Map</div>}
             </div>
         )
     }
