@@ -2,10 +2,12 @@ import React, { Component } from 'react'
 
 export class MapToolbar extends Component {
     state = {
-        selectedIcon: null
+        selectedIcon: null,
+        availableIcons: null
     }
 
     shouldComponentUpdate() {
+        if (this.state.availableIcons === null) return true
         if (this.props.placeMarker) return true
         return false
     }
@@ -13,15 +15,14 @@ export class MapToolbar extends Component {
     componentDidUpdate() {
         if (!this.props.placeMarker) {
             let oldIcon = window.document.querySelector('#markerIcons div.text-info')
-            if (oldIcon)
-            {
+            if (oldIcon) {
                 oldIcon.classList.remove('text-info')
                 oldIcon.classList.add('text-white')
             }
         }
     }
 
-    componentWillMount() {
+    componentDidMount() {
         this.setState({
             availableIcons: this.makeIcons(['map-pin','map-marker','flag','thumbtack','beer','coffee','utensils','birthday-cake','graduation-cap','university','home','info','music','plane','bus','car'])
         })
