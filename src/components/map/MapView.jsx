@@ -5,9 +5,11 @@ import { getMarkerSVGByName } from './MarkerIcons'
 import { testing } from '../../MapStyles'
 
 import { MarkerEditor } from './MarkerEditor'
-import { HelpWindow } from '../ui/HelpWindow'
 import { MapToolbar } from './MapToolbar'
+import { HelpWindow } from '../ui/HelpWindow'
 import { Sidebar } from '../ui/Sidebar'
+
+import MarkerList from './MarkerList'
 //#endregion
 
 class MapView extends Component {
@@ -41,15 +43,6 @@ class MapView extends Component {
     //                         otherMarkers.push(marker)
     //                     })
     //                 })
-    //                 this.setState({
-    //                     otherMarkers: otherMarkers
-    //                 })
-    //             }
-
-    //             let userMarkers = res.data.userMarkers ? JSON.parse(res.data.userMarkers.markers) : []
-    //             userMarkers.forEach((marker) => {
-    //                 let iconSVG = getMarkerSVGByName(marker.iconName)
-    //                 marker.iconSVG.path = iconSVG.path
     //             })
     //             this.setState({
     //                 userMarkers: userMarkers
@@ -146,10 +139,14 @@ class MapView extends Component {
     }
 
     saveMap = () => {
-        // let data = JSON.stringify(this.state.userMarkers)
-        // axios.post('http://localhost:3001', querystring.stringify({markers: data})).then((res) => {
-        //     window.location.href = "http://localhost:3000/" + res.data
-        // })
+        let markers = []
+
+        this.state.userMarkers.forEach((marker) => { //remove the SVG path to save up upload and data size
+            delete marker.iconSVG.path
+            markers.push(marker)
+        })
+
+        console.log(markers)
     }
 
     // TODO get this logic working from within the MarkerEditor component
@@ -272,15 +269,8 @@ class MapView extends Component {
                 <Sidebar visible={this.state.leftSidebarVisible} side="left" size={"300px"}>
                     <div className="row">
                         <div className="col">
-                            <h4>Main Markers</h4>
-                            {this.state.userMarkers.map((a, b) =>{
-                                return <i style={{cursor: "pointer"}} onClick={this.globalMarkerClicked} key={a.index} data-index={a.index} className={"fa fa-fw fa-2x fa-" + a.iconName}></i>
-                            })}
-                            <hr></hr>
-                            <h4>Other Markers</h4>
-                            {this.state.otherMarkers.map((a, b) =>{
-                                return <i onClick={this.globalOtherMarkerClicked} key={a.index} data-index={a.index} className={"fa fa-fw fa-2x fa-" + a.iconName}></i>
-                            })}
+                            {userMarkers.length !== 0 ? <MarkerList iconClicked={this.globalMarkerClicked} markers={this.state.userMarkers} user={this.props.user} /> : null }
+                            {otherMarkers.length !== 0 ? <MarkerList iconClicked={this.globalMarkerClicked} markers={this.state.otherMarkers} /> : null }
                         </div>
                     </div>
                 </Sidebar>
@@ -298,7 +288,7 @@ class MapView extends Component {
                 </Sidebar>
                 
                 <Sidebar visible={this.state.mapToolbarVisible} side="right">
-                    <MapToolbar onIconClick={this.toolbarIconClicked} onMapSave={this.saveMap} placeMarker={this.state.placeMarker} />
+                    <MapToolbar onIconClick={this.toolbarIconClicked} onMapSave={this.saveMap} placeMarker={this.state.placeMarker} user={this.props.user} />
                 </Sidebar>
             </div>
         )
