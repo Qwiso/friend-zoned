@@ -4,7 +4,7 @@ import MapView from './map/MapView'
 
 class MainMap extends Component {
     render() { 
-        return <MapView />
+        return <MapView user={this.props.user} />
     }
 }
 
