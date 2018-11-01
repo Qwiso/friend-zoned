@@ -46,8 +46,7 @@ export class MapToolbar extends Component {
         this.props.onIconClick(e)
 
         let oldIcon = window.document.querySelector('#markerIcons div.text-info')
-        if (oldIcon)
-        {
+        if (oldIcon) {
             oldIcon.classList.remove('text-info')
             oldIcon.classList.add('text-white')
         }

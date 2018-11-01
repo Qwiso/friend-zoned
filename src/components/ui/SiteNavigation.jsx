@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 
 export class SiteNavigation extends Component {
     state = {  }
@@ -24,15 +24,15 @@ export class SiteNavigation extends Component {
         return (
             <div>
                 {this.makeButton({
-                faIcon: "fa-map",
-                text: "Map",
-                route: "/"
-            })}
-            {this.makeButton({
-                faIcon: "fa-user",
-                text: "Profile",
-                route: "/profile"
-            })}
+                    faIcon: "fa-map",
+                    text: "Map",
+                    route: "/"
+                })}
+                {this.makeButton({
+                    faIcon: "fa-user",
+                    text: "Profile",
+                    route: "/profile"
+                })}
             </div>
         )
     }
