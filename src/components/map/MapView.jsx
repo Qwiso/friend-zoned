@@ -206,6 +206,17 @@ class MapView extends Component {
             activeMarker: marker
         })
     }
+
+    onMarkerDelete = (e) => {
+        if(!window.confirm('Delete Marker?')) return false
+        let userMarkers = this.state.userMarkers
+        userMarkers.splice(this.state.activeMarker.index, 1)
+        this.setState({
+            userMarkers: userMarkers,
+            activeMarker: null,
+            markerEditorVisible: false
+        })
+    }
     //#endregion
     
     render() {
@@ -286,6 +297,7 @@ class MapView extends Component {
                         onFillOpacityChange={this.onMarkerFillOpacityChange}
                         onStrokeColorChange={this.onMarkerStrokeColorChange}
                         onStrokeWeightChange={this.onMarkerStrokeWeightChange}
+                        onMarkerDelete={this.onMarkerDelete}
                     />
                 </Sidebar>
                 

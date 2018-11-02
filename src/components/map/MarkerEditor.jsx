@@ -10,7 +10,7 @@ export class MarkerEditor extends Component {
     onStrokeWeightChange = this.props.onStrokeWeightChange
 
     render() {
-        if (!this.props.activeMarker) return <div></div>
+        if (!this.props.activeMarker) return null
         let marker = this.props.activeMarker
         return (
             <div className="row">
@@ -23,6 +23,8 @@ export class MarkerEditor extends Component {
 
                     <input className="form-control mb-2" type="color" name="strokeColor" value={marker.iconSVG.strokeColor} onChange={(e) => this.onStrokeColorChange(e)} />
                     <input className="form-control mb-2" type="range" name="strokeWeight" value={marker.iconSVG.strokeWeight} min="0" max="5" step="1" onChange={(e) => this.onStrokeWeightChange(e)} />
+
+                    <button className="btn btn-danger form-control mb-2" type="button" name="deleteMarker" onClick={(e) => this.props.onMarkerDelete(e)}>Delete Marker</button>
                 </div>
             </div>
         )
