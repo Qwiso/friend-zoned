@@ -6,7 +6,7 @@ import '@fortawesome/fontawesome-free/css/all.min.css'
 
 import withAuthentication from './components/auth/withAuthentication'
 
-import MainMap from './components/MainMap'
+import Main from './components/Main'
 import Login from './components/auth/Login'
 
 const firebaseConfig = {
@@ -29,9 +29,9 @@ class App extends Component {
           <section name="content">
             <div className="container-fluid p-0">
               <Switch>
-                <Route exact path="/" component={MainMap} />
-                <Route exact path="/map/:id" component={MainMap} />
-                <Route exact path="/:id/with/:others" component={MainMap} />
+                <Route exact path="/" component={Main} />
+                <Route exact path="/map/:id" component={Main} />
+                <Route exact path="/:id/with/:others" component={Main} />
                 <Route exact path="/login" component={Login} />
                 <Route exact path="/logout" component={Logout} />
               </Switch>

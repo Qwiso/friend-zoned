@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 
 class MarkerList extends Component {
     render() {
-        console.log('render list')
         let markerList = this.props.markers.map((a, b) => {
             return <i style={{cursor: "pointer"}} onClick={this.props.iconClicked} key={a.index} data-index={a.index} className={"mb-2 fa fa-fw fa-2x fa-" + a.iconName}></i>
         })
