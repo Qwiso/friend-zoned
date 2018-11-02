@@ -6,16 +6,19 @@ export class Sidebar extends Component {
         side: this.props.side || "left"
     }
 
-    render() { 
+    // BUG when passing prop size > 50% of vw
+    render() {
         switch (this.state.side) {
             case "left":
                 return (
                     <section name="leftsidebar">
                         <div
-                            style={{width: this.state.size,
+                            style={{
+                                width: this.state.size,
                                 maxWidth: "50%",
                                 left: this.props.visible ? '0px' : '-'+this.state.size,
-                                transition: '0.5s'}}
+                                transition: '0.5s'
+                            }}
                             className={"bg-dark text-white h-100 d-inline-block position-fixed"}>
                             {this.props.children}
                         </div>
@@ -29,7 +32,8 @@ export class Sidebar extends Component {
                                 width: this.state.size,
                                 maxWidth: "50%",
                                 right: this.props.visible ? '0px' : '-'+this.state.size,
-                                transition: '0.5s'}}
+                                transition: '0.5s'
+                            }}
                             className={"bg-dark text-white h-100 d-inline-block position-fixed"}>
                             {this.props.children}
                         </div>
