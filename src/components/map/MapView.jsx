@@ -270,7 +270,7 @@ class MapView extends Component {
                     <div className="row">
                         <div className="col">
                             {userMarkers.length !== 0 ? <MarkerList iconClicked={this.globalMarkerClicked} markers={this.state.userMarkers} user={this.props.user} /> : null }
-                            {otherMarkers.length !== 0 ? <MarkerList iconClicked={this.globalMarkerClicked} markers={this.state.otherMarkers} /> : null }
+                            {otherMarkers.length !== 0 ? <MarkerList iconClicked={this.globalMarkerClicked} markers={this.state.otherMarkers} title='Other Markers' /> : null }
                         </div>
                     </div>
                 </Sidebar>
