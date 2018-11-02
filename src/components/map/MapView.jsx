@@ -15,7 +15,7 @@ import MarkerList from './MarkerList'
 class MapView extends Component {
     state = {
         mapStyle: testing,
-        leftSidebarVisible: true,
+        leftSidebarVisible: false,
         markerEditorVisible: false,
         mapToolbarVisible: true,
         currentMarkerIconName: 'map-pin',
@@ -87,9 +87,11 @@ class MapView extends Component {
     }
 
     onOtherMarkerClick = (a, b, e) => {
-        // render an infowindow?
+        // TODO render an infowindow?
     }
 
+    // BUG you can't center on the same marker twice
+    // because panToPos is never reset
     globalMarkerClicked = (a) => {
         this.setState({
             panToPos: this.state.userMarkers[a.currentTarget.dataset.index].position
@@ -270,7 +272,7 @@ class MapView extends Component {
                     <div className="row">
                         <div className="col">
                             {userMarkers.length !== 0 ? <MarkerList iconClicked={this.globalMarkerClicked} markers={this.state.userMarkers} user={this.props.user} /> : null }
-                            {otherMarkers.length !== 0 ? <MarkerList iconClicked={this.globalMarkerClicked} markers={this.state.otherMarkers} title='Other Markers' /> : null }
+                            {otherMarkers.length !== 0 ? <MarkerList iconClicked={this.globalOtherMarkerClicked} markers={this.state.otherMarkers} title='Other Markers' /> : null }
                         </div>
                     </div>
                 </Sidebar>
