@@ -119,8 +119,8 @@ class MapView extends Component {
         if (this.state.placeMarker) {
             let newMarker = {
                 index: this.state.userMarkers.length,
-                name: "new marker",
-                description: "description",
+                name: "",
+                description: "",
                 position: {
                     lat: e.latLng.lat(),
                     lng: e.latLng.lng()
@@ -143,7 +143,7 @@ class MapView extends Component {
     saveMap = () => {
         let markers = []
 
-        this.state.userMarkers.forEach((marker) => { //remove the SVG path to save up upload and data size
+        this.state.userMarkers.forEach((marker) => { //remove the SVG path to reduce data size
             delete marker.iconSVG.path
             markers.push(marker)
         })
@@ -252,12 +252,24 @@ class MapView extends Component {
         return (
             <div>
                 <Map
-                    style={{transition: "0.5s", marginBottom: 46, marginLeft: this.state.leftSidebarVisible ? 300 : 0, marginRight: this.state.mapToolbarVisible ? 150 : 0}}
+                    style={{
+                        transition: "0.5s",
+                        marginBottom: 46,
+                        marginLeft: this.state.leftSidebarVisible
+                            ? 300
+                            : 0,
+                        marginRight: this.state.mapToolbarVisible
+                            ? 150
+                            : 0
+                    }}
                     styles={this.state.mapStyle}
                     onClick={this.onMapClicked}
                     google={this.props.google}
                     zoom={10}
-                    center={this.state.panToPos ? this.state.panToPos : null}
+                    center={this.state.panToPos
+                        ? this.state.panToPos
+                        : null
+                    }
                     initialCenter={{
                         lat: 33.83008972168741,
                         lng: -84.35267661111448
@@ -282,8 +294,12 @@ class MapView extends Component {
                 <Sidebar visible={this.state.leftSidebarVisible} side="left" size={"300px"}>
                     <div className="row">
                         <div className="col">
-                            {userMarkers.length !== 0 ? <MarkerList iconClicked={this.globalMarkerClicked} markers={this.state.userMarkers} user={this.props.user} /> : null }
-                            {otherMarkers.length !== 0 ? <MarkerList iconClicked={this.globalOtherMarkerClicked} markers={this.state.otherMarkers} title='Other Markers' /> : null }
+                            {userMarkers.length !== 0
+                                ? <MarkerList iconClicked={this.globalMarkerClicked} markers={this.state.userMarkers} user={this.props.user} />
+                                : null }
+                            {otherMarkers.length !== 0
+                                ? <MarkerList iconClicked={this.globalOtherMarkerClicked} markers={this.state.otherMarkers} title='Other Markers' />
+                                : null }
                         </div>
                     </div>
                 </Sidebar>
